@@ -13,8 +13,8 @@
             font-family: 'Tajawal', sans-serif;
         }
         body {
-            background: linear-gradient(135deg, #f0f4f8, #d9e2ec);
-            color: #102a43;
+            background: linear-gradient(135deg, #022442 0%, #001220 100%);
+            color: #1e293b;
             min-height: 100vh;
             display: flex;
             justify-content: center;
@@ -22,48 +22,59 @@
             padding: 20px;
         }
         .container {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(178, 190, 205, 0.4);
-            border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(16, 42, 67, 0.1);
+            background: rgba(255, 255, 255, 0.97);
+            backdrop-filter: blur(16px);
+            border: 2px solid #f5af02;
+            border-radius: 24px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 25px rgba(245, 175, 2, 0.2);
             width: 100%;
             max-width: 480px;
-            padding: 35px 25px;
+            padding: 40px 28px;
             text-align: center;
         }
         h2 {
-            font-size: 1.8rem;
-            margin-bottom: 8px;
-            color: #0284c7;
-            font-weight: 700;
+            font-size: 1.9rem;
+            margin-bottom: 6px;
+            color: #022442; /* اللون الأزرق المطلوب */
+            font-weight: 800;
+            letter-spacing: -0.5px;
         }
         .subtitle {
             font-size: 0.95rem;
-            color: #627d98;
+            color: #556270;
             margin-bottom: 25px;
+            font-weight: 500;
         }
         .tabs {
             display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
+            gap: 12px;
+            margin-bottom: 22px;
+            background: #fff8e1;
+            padding: 6px;
+            border-radius: 14px;
+            border: 1px solid #ffe082;
         }
         .tab-btn {
             flex: 1;
-            padding: 10px;
-            background: #e2e8f0;
+            padding: 11px;
+            background: transparent;
             border: none;
             border-radius: 10px;
             font-size: 0.95rem;
             font-weight: 700;
-            color: #475569;
+            color: #556270;
             cursor: pointer;
             transition: all 0.3s ease;
         }
-        .tab-btn.active {
-            background: #0284c7;
-            color: white;
-            box-shadow: 0 4px 10px rgba(2, 132, 199, 0.2);
+        .tab-btn.active.period-tab {
+            background: #022442;
+            color: #f5af02;
+            box-shadow: 0 4px 12px rgba(2, 36, 66, 0.3);
+        }
+        .tab-btn.active.teams-tab {
+            background: #f5af02;
+            color: #022442;
+            box-shadow: 0 4px 12px rgba(245, 175, 2, 0.3);
         }
         .section-form {
             display: none;
@@ -80,16 +91,16 @@
             display: block;
             margin-bottom: 8px;
             font-size: 0.95rem;
-            color: #334e68;
+            color: #022442;
             font-weight: 700;
         }
         input[type="text"] {
             width: 100%;
             padding: 14px 16px;
-            background: #f8fafc;
-            border: 2px solid #bcccdc;
-            border-radius: 12px;
-            color: #102a43;
+            background: #fffdf5;
+            border: 2px solid #ffe082;
+            border-radius: 14px;
+            color: #022442;
             font-size: 1.1rem;
             text-align: center;
             letter-spacing: 2px;
@@ -97,43 +108,55 @@
         }
         input[type="text"]:focus {
             outline: none;
-            border-color: #0284c7;
+            border-color: #f5af02;
             background: #ffffff;
-            box-shadow: 0 0 10px rgba(2, 132, 199, 0.15);
+            box-shadow: 0 0 0 4px rgba(245, 175, 2, 0.2);
         }
         button.action-btn {
             width: 100%;
             padding: 14px;
-            background: linear-gradient(135deg, #0284c7, #0369a1);
-            color: white;
             border: none;
-            border-radius: 12px;
+            border-radius: 14px;
             font-size: 1.1rem;
             font-weight: 700;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 12px rgba(2, 132, 199, 0.25);
         }
-        button.action-btn:hover {
-            background: linear-gradient(135deg, #0369a1, #075985);
+        button.period-btn {
+            background: linear-gradient(135deg, #022442, #043868);
+            color: #f5af02;
+            box-shadow: 0 6px 16px rgba(2, 36, 66, 0.3);
+            border: 1px solid #f5af02;
+        }
+        button.period-btn:hover {
+            background: linear-gradient(135deg, #043868, #022442);
             transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(2, 132, 199, 0.35);
+            box-shadow: 0 8px 20px rgba(2, 36, 66, 0.4);
+        }
+        button.teams-btn {
+            background: linear-gradient(135deg, #f5af02, #d49500);
+            color: #022442;
+            box-shadow: 0 6px 16px rgba(245, 175, 2, 0.3);
+        }
+        button.teams-btn:hover {
+            background: linear-gradient(135deg, #d49500, #b57c00);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(245, 175, 2, 0.4);
         }
         .result-box {
             margin-top: 25px;
             padding: 20px;
-            border-radius: 14px;
+            border-radius: 16px;
             display: none;
             animation: fadeIn 0.4s ease forwards;
             text-align: right;
         }
         .result-box.success {
-            background: #f0fdf4;
-            border: 1px solid #86efac;
-            color: #14532d;
+            background: #fffdf5;
+            border: 1px solid #ffe082;
         }
         .result-box.error {
-            background: #fef2f2;
+            background: #fff5f5;
             border: 1px solid #fca5a5;
             color: #7f1d1d;
         }
@@ -141,57 +164,75 @@
             font-size: 1.2rem;
             margin-bottom: 12px;
             text-align: center;
-            color: #0284c7;
+            color: #022442;
+        }
+        .result-box.teams-result h3 {
+            color: #b57c00;
         }
         .info-row {
             display: flex;
             justify-content: space-between;
-            border-bottom: 1px dashed #cbd5e1;
-            padding-bottom: 6px;
-            margin-bottom: 8px;
+            border-bottom: 1px dashed #ffe082;
+            padding-bottom: 8px;
+            margin-bottom: 10px;
         }
         .info-row span {
-            color: #486581;
+            color: #556270;
         }
         .info-row strong {
-            color: #102a43;
+            color: #022442;
         }
         .grade-badge {
             display: block;
             text-align: center;
-            font-size: 1.3rem;
+            font-size: 1.35rem;
             font-weight: 900;
-            color: #0369a1;
-            background: rgba(2, 132, 199, 0.08);
-            padding: 8px 12px;
-            border-radius: 10px;
+            padding: 10px 12px;
+            border-radius: 12px;
             margin: 15px 0;
-            border: 1px solid rgba(2, 132, 199, 0.2);
+        }
+        .grade-badge.period {
+            color: #022442;
+            background: rgba(2, 36, 66, 0.08);
+            border: 1px solid rgba(2, 36, 66, 0.2);
+        }
+        .grade-badge.teams {
+            color: #b57c00;
+            background: rgba(245, 175, 2, 0.12);
+            border: 1px solid rgba(245, 175, 2, 0.3);
         }
         .feedback-box {
             padding: 12px 15px;
-            border-radius: 10px;
+            border-radius: 12px;
             font-size: 0.98rem;
             margin-top: 10px;
             text-align: center;
             font-weight: 500;
         }
-        .feedback-box.excellent { background: #dcfce7; color: #166534; border: 1px solid #22c55e; }
-        .feedback-box.good { background: #fef9c3; color: #854d0e; border: 1px solid #eab308; }
-        .feedback-box.encouraging { background: #e0e7ff; color: #3730a3; border: 1px solid #6366f1; }
+        .feedback-box.excellent { background: #f0fdf4; color: #166534; border: 1px solid #bbf7d0; }
+        .feedback-box.good { background: #fffbeb; color: #92400e; border: 1px solid #fde68a; }
+        .feedback-box.encouraging { background: #f0f9ff; color: #0369a1; border: 1px solid #bae6fd; }
         
         .footer {
             margin-top: 30px;
-            font-size: 0.9rem;
-            color: #627d98;
+            font-size: 0.95rem;
+            color: #000000; /* اللون الأسود المطلوب */
+            font-weight: 700;
             text-align: center;
-            border-top: 1px solid #e2e8f0;
-            padding-top: 15px;
+            border-top: 1px solid #ffe082;
+            padding-top: 18px;
+            line-height: 1.6;
         }
         .footer span {
-            color: #0284c7;
+            color: #000000; /* اللون الأسود للاسم */
             font-weight: 700;
-            font-size: 0.95rem;
+        }
+        .footer-rights {
+            font-size: 0.75rem;
+            color: #556270;
+            font-weight: 400;
+            display: block;
+            margin-top: 4px;
         }
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
@@ -206,31 +247,31 @@
         <p class="subtitle">متوسطة عدي بن حاتم - النظام التفاعلي</p>
         
         <div class="tabs">
-            <button class="tab-btn active" onclick="switchTab('period')">اختبار الفترة</button>
-            <button class="tab-btn" onclick="switchTab('teams')">اختبارات Teams</button>
+            <button class="tab-btn active period-tab" onclick="switchTab('period')">اختبار الفترة</button>
+            <button class="tab-btn teams-tab" onclick="switchTab('teams')">اختبارات Teams</button>
         </div>
 
         <div id="periodSection" class="section-form active">
             <div class="form-group">
                 <label for="periodId">رقم الهوية لاختبار الفترة:</label>
-                <input type="text" id="periodId" maxlength="10" placeholder="مثال: 1155309303" inputmode="numeric">
+                <input type="text" id="periodId" maxlength="10" placeholder="مثال: 1234567890" inputmode="numeric">
             </div>
-            <button class="action-btn" onclick="checkPeriodGrade()">عرض درجة الفترة</button>
+            <button class="action-btn period-btn" onclick="checkPeriodGrade()">عرض درجة الفترة</button>
         </div>
 
         <div id="teamsSection" class="section-form">
             <div class="form-group">
                 <label for="teamsId">رقم الهوية لاختبارات Teams:</label>
-                <input type="text" id="teamsId" maxlength="10" placeholder="مثال: 1041722077" inputmode="numeric">
+                <input type="text" id="teamsId" maxlength="10" placeholder="مثال: 1234567890" inputmode="numeric">
             </div>
-            <button class="action-btn" onclick="checkTeamsGrade()">عرض درجة Teams</button>
+            <button class="action-btn teams-btn" onclick="checkTeamsGrade()">عرض درجة Teams</button>
         </div>
 
         <div id="resultContainer" class="result-box"></div>
 
         <div class="footer">
-            إعداد وتنفيذ المعلم: <span>عبدالمحيي السلمي</span><br>
-            <span style="font-size: 0.75rem; color: #829ab1; font-weight: 400;">جميع الحقوق محفوظة © ٢٠٢٦</span>
+            إعداد وتنفيذ المعلم: <span>عبدالمحيي السلمي</span>
+            <span class="footer-rights">جميع الحقوق محفوظة © ٢٠٢٦</span>
         </div>
     </div>
 
@@ -241,6 +282,9 @@
         }
 
         const periodData = {
+            "1234567890": { name: "محمد احمد سالم", score: 19, total: 20 },
+            "1234567899": { name: "يوسف علي باشا", score: 13, total: 20 },
+            "1234567891": { name: "ناصر ماجد علي", score: 9, total: 20 },
             "1155309303": { name: "أصيل حسن علي عواجي", score: 3, total: 20 },
             "11729": { name: "بندر عزالدين موسى ابا", score: 12, total: 20 },
             "1154414203": { name: "تركي هاني ابن حسن تازي", score: 6, total: 20 },
@@ -279,6 +323,9 @@
         };
 
         const teamsData = {
+            "1234567890": { name: "محمد احمد سالم", score: 9, total: 10 },
+            "1234567899": { name: "يوسف علي باشا", score: 7, total: 10 },
+            "1234567891": { name: "ناصر ماجد علي", score: 4, total: 10 },
             "1041722077": { name: "يوسف محمد المولد", score: 9, total: 10 },
             "1041712077": { name: "محمد يوسف", score: 8.5, total: 10 },
             "1041712022": { name: "خالد علي", score: 9.5, total: 10 },
@@ -371,10 +418,10 @@
             document.getElementById('resultContainer').style.display = 'none';
 
             if (tabName === 'period') {
-                document.querySelectorAll('.tab-btn')[0].classList.add('active');
+                document.querySelector('.period-tab').classList.add('active');
                 document.getElementById('periodSection').classList.add('active');
             } else {
-                document.querySelectorAll('.tab-btn')[1].classList.add('active');
+                document.querySelector('.teams-tab').classList.add('active');
                 document.getElementById('teamsSection').classList.add('active');
             }
         }
@@ -400,7 +447,7 @@
                 resultBox.innerHTML = `
                     <h3>نتيجة اختبار الفترة</h3>
                     <div class="info-row"><span>اسم الطالب:</span><strong>${student.name}</strong></div>
-                    <div class="grade-badge">الدرجة: ${toArabicNumerals(student.score)} من ${toArabicNumerals(student.total)}</div>
+                    <div class="grade-badge period">الدرجة: ${toArabicNumerals(student.score)} من ${toArabicNumerals(student.total)}</div>
                     <div class="feedback-box ${fb.class}">
                         <strong>${fb.title}</strong><br>
                         ${fb.message}
@@ -430,11 +477,11 @@
                 playSound(fb.sound);
 
                 resultBox.style.display = "block";
-                resultBox.className = "result-box success";
+                resultBox.className = "result-box success teams-result";
                 resultBox.innerHTML = `
                     <h3>نتيجة اختبارات Teams</h3>
                     <div class="info-row"><span>اسم الطالب:</span><strong>${student.name}</strong></div>
-                    <div class="grade-badge" style="background: rgba(14, 165, 233, 0.08); color: #0284c7;">الدرجة: ${toArabicNumerals(student.score)} من ${toArabicNumerals(student.total)}</div>
+                    <div class="grade-badge teams">الدرجة: ${toArabicNumerals(student.score)} من ${toArabicNumerals(student.total)}</div>
                     <div class="feedback-box ${fb.class}">
                         <strong>${fb.title}</strong><br>
                         ${fb.message}
