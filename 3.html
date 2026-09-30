@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بوابة نتائج الرياضيات - متوسطة عدي بن حاتم</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Tajawal', sans-serif;
+        }
+        body {
+            background: linear-gradient(135deg, #f0f4f8, #d9e2ec);
+            color: #102a43;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(178, 190, 205, 0.4);
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(16, 42, 67, 0.1);
+            width: 100%;
+            max-width: 480px;
+            padding: 35px 25px;
+            text-align: center;
+        }
+        h2 {
+            font-size: 1.8rem;
+            margin-bottom: 8px;
+            color: #0284c7;
+            font-weight: 700;
+        }
+        .subtitle {
+            font-size: 0.95rem;
+            color: #627d98;
+            margin-bottom: 25px;
+        }
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .tab-btn {
+            flex: 1;
+            padding: 10px;
+            background: #e2e8f0;
+            border: none;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #475569;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .tab-btn.active {
+            background: #0284c7;
+            color: white;
+            box-shadow: 0 4px 10px rgba(2, 132, 199, 0.2);
+        }
+        .section-form {
+            display: none;
+        }
+        .section-form.active {
+            display: block;
+            animation: fadeIn 0.4s ease forwards;
+        }
+        .form-group {
+            margin-bottom: 20px;
+            text-align: right;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+            color: #334e68;
+            font-weight: 700;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 14px 16px;
+            background: #f8fafc;
+            border: 2px solid #bcccdc;
+            border-radius: 12px;
+            color: #102a43;
+            font-size: 1.1rem;
+            text-align: center;
+            letter-spacing: 2px;
+            transition: all 0.3s ease;
+        }
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #0284c7;
+            background: #ffffff;
+            box-shadow: 0 0 10px rgba(2, 132, 199, 0.15);
+        }
+        button.action-btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #0284c7, #0369a1);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(2, 132, 199, 0.25);
+        }
+        button.action-btn:hover {
+            background: linear-gradient(135deg, #0369a1, #075985);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(2, 132, 199, 0.35);
+        }
+        .result-box {
+            margin-top: 25px;
+            padding: 20px;
+            border-radius: 14px;
+            display: none;
+            animation: fadeIn 0.4s ease forwards;
+            text-align: right;
+        }
+        .result-box.success {
+            background: #f0fdf4;
+            border: 1px solid #86efac;
+            color: #14532d;
+        }
+        .result-box.error {
+            background: #fef2f2;
+            border: 1px solid #fca5a5;
+            color: #7f1d1d;
+        }
+        .result-box h3 {
+            font-size: 1.2rem;
+            margin-bottom: 12px;
+            text-align: center;
+            color: #0284c7;
+        }
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px dashed #cbd5e1;
+            padding-bottom: 6px;
+            margin-bottom: 8px;
+        }
+        .info-row span {
+            color: #486581;
+        }
+        .info-row strong {
+            color: #102a43;
+        }
+        .grade-badge {
+            display: block;
+            text-align: center;
+            font-size: 1.3rem;
+            font-weight: 900;
+            color: #0369a1;
+            background: rgba(2, 132, 199, 0.08);
+            padding: 8px 12px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border: 1px solid rgba(2, 132, 199, 0.2);
+        }
+        .feedback-box {
+            padding: 12px 15px;
+            border-radius: 10px;
+            font-size: 0.98rem;
+            margin-top: 10px;
+            text-align: center;
+            font-weight: 500;
+        }
+        .feedback-box.excellent { background: #dcfce7; color: #166534; border: 1px solid #22c55e; }
+        .feedback-box.good { background: #fef9c3; color: #854d0e; border: 1px solid #eab308; }
+        .feedback-box.encouraging { background: #e0e7ff; color: #3730a3; border: 1px solid #6366f1; }
+        
+        .footer {
+            margin-top: 30px;
+            font-size: 0.9rem;
+            color: #627d98;
+            text-align: center;
+            border-top: 1px solid #e2e8f0;
+            padding-top: 15px;
+        }
+        .footer span {
+            color: #0284c7;
+            font-weight: 700;
+            font-size: 0.95rem;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>بوابة نتائج الرياضيات</h2>
+        <p class="subtitle">متوسطة عدي بن حاتم - النظام التفاعلي</p>
+        
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab('period')">اختبار الفترة</button>
+            <button class="tab-btn" onclick="switchTab('teams')">اختبارات Teams</button>
+        </div>
+
+        <div id="periodSection" class="section-form active">
+            <div class="form-group">
+                <label for="periodId">رقم الهوية لاختبار الفترة:</label>
+                <input type="text" id="periodId" maxlength="10" placeholder="مثال: 1155309303" inputmode="numeric">
+            </div>
+            <button class="action-btn" onclick="checkPeriodGrade()">عرض درجة الفترة</button>
+        </div>
+
+        <div id="teamsSection" class="section-form">
+            <div class="form-group">
+                <label for="teamsId">رقم الهوية لاختبارات Teams:</label>
+                <input type="text" id="teamsId" maxlength="10" placeholder="مثال: 1041722077" inputmode="numeric">
+            </div>
+            <button class="action-btn" onclick="checkTeamsGrade()">عرض درجة Teams</button>
+        </div>
+
+        <div id="resultContainer" class="result-box"></div>
+
+        <div class="footer">
+            إعداد وتنفيذ المعلم: <span>عبدالمحيي السلمي</span><br>
+            <span style="font-size: 0.75rem; color: #829ab1; font-weight: 400;">جميع الحقوق محفوظة © ٢٠٢٦</span>
+        </div>
+    </div>
+
+    <script>
+        function toArabicNumerals(num) {
+            const arabicNumbers = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
+            return num.toString().replace(/\d/g, (digit) => arabicNumbers[digit]);
+        }
+
+        const periodData = {
+            "1155309303": { name: "أصيل حسن علي عواجي", score: 3, total: 20 },
+            "11729": { name: "بندر عزالدين موسى ابا", score: 12, total: 20 },
+            "1154414203": { name: "تركي هاني ابن حسن تازي", score: 6, total: 20 },
+            "1170180994": { name: "ثامر غزاى غويزي الروقي", score: 6, total: 20 },
+            "1159087673": { name: "جميل فيصل رياض السليماني", score: 15, total: 20 },
+            "1154716904": { name: "حسام حمزه عبدالرحمن بخاري", score: 5, total: 20 },
+            "1158040699": { name: "سالم ثامر سالم الشمري", score: 16, total: 20 },
+            "1158471290": { name: "سعود ناصر سعود المنيعي", score: 11, total: 20 },
+            "2334854706": { name: "عادل احمد عادل الحجه", score: 16, total: 20 },
+            "160206266": { name: "عبدالحكيم احمد محمد حنتوش", score: 16, total: 20 },
+            "2315324513": { name: "عبدالرحمن محمد محمد بهجت المنلا", score: 15, total: 20 },
+            "4130996293": { name: "عبدالعزيز سالم محمد النهدي", score: 20, total: 20 },
+            "2320106921": { name: "عبدالعزيز شائف شرف علي", score: 18, total: 20 },
+            "2325689673": { name: "عبدالعزيز عمر احمد قواص", score: 10, total: 20 },
+            "1159476728": { name: "عبدالله احمد عطية الله النعماني", score: 10, total: 20 },
+            "1157123553": { name: "عبدالله سليمان عبدالله الحربي", score: 0, total: 20 },
+            "2322087509": { name: "عـبدالله غازي عبدالله اليافعي", score: 10, total: 20 },
+            "1157066638": { name: "عبدالملك نايف عايض الدوسري", score: 6, total: 20 },
+            "2370510261": { name: "عبدالولي محمد بليي عبدي", score: 16, total: 20 },
+            "2305556959": { name: "علي عمر احمد بن يهب", score: 15, total: 20 },
+            "1156295030": { name: "علي معيلي جدوع الحربي", score: 10, total: 20 },
+            "1158212785": { name: "عمار حسن بن عطيةالله الصحفي", score: 5, total: 20 },
+            "2340798830": { name: "عمر رائد احمد الجمالي", score: 5, total: 20 },
+            "1159259371": { name: "فهد مشعل فهد الشمري", score: 10, total: 20 },
+            "1157392653": { name: "فيصل بندر بن عبدالغني الحربي", score: 20, total: 20 },
+            "1164217604": { name: "فيصل عبدالله سعد القثامي", score: 11, total: 20 },
+            "1153983687": { name: "فيصل عبدالله صديق زيد", score: 16, total: 20 },
+            "1158049237": { name: "قصي اشرف ابوبكر عثمان", score: 7, total: 20 },
+            "1182619500": { name: "ماجد محمد عبدالله الشمراني", score: 7, total: 20 },
+            "1157860675": { name: "مالك عمر عوض الحربي", score: 20, total: 20 },
+            "1155631458": { name: "محمد علي حسن الشهري", score: 8, total: 20 },
+            "1157846484": { name: "محمد غيث رحاب النعماني", score: 20, total: 20 },
+            "1158457349": { name: "محمد فهد علي الغامدي", score: 20, total: 20 },
+            "1154894610": { name: "نواف سلطان سعيد الجحدلي", score: 10, total: 20 },
+            "1153553589": { name: "وليد نواف ملفى الحربي", score: 16, total: 20 }
+        };
+
+        const teamsData = {
+            "1041722077": { name: "يوسف محمد المولد", score: 9, total: 10 },
+            "1041712077": { name: "محمد يوسف", score: 8.5, total: 10 },
+            "1041712022": { name: "خالد علي", score: 9.5, total: 10 },
+            "1041712033": { name: "فارس السلمي", score: 10, total: 10 }
+        };
+
+        function playSound(type) {
+            const AudioContext = window.AudioContext || window.webkitAudioContext;
+            if (!AudioContext) return;
+            const ctx = new AudioContext();
+
+            if (type === 'applause') {
+                for (let i = 0; i < 15; i++) {
+                    setTimeout(() => {
+                        const bufferSize = ctx.sampleRate * 0.08;
+                        const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+                        const data = buffer.getChannelData(0);
+                        for (let j = 0; j < bufferSize; j++) {
+                            data[j] = Math.random() * 2 - 1;
+                        }
+                        const noise = ctx.createBufferSource();
+                        noise.buffer = buffer;
+                        const filter = ctx.createBiquadFilter();
+                        filter.type = 'bandpass';
+                        filter.frequency.value = 1000;
+                        const gain = ctx.createGain();
+                        gain.gain.setValueAtTime(0.3, ctx.currentTime);
+                        gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.08);
+                        noise.connect(filter);
+                        filter.connect(gain);
+                        gain.connect(ctx.destination);
+                        noise.start();
+                    }, i * 60);
+                }
+            } else if (type === 'success') {
+                const notes = [523.25, 659.25, 783.99, 1046.50];
+                notes.forEach((freq, index) => {
+                    const osc = ctx.createOscillator();
+                    const gain = ctx.createGain();
+                    osc.type = 'triangle';
+                    osc.frequency.value = freq;
+                    gain.gain.setValueAtTime(0.15, ctx.currentTime + index * 0.12);
+                    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + index * 0.12 + 0.3);
+                    osc.connect(gain);
+                    gain.connect(ctx.destination);
+                    osc.start(ctx.currentTime + index * 0.12);
+                    osc.stop(ctx.currentTime + index * 0.12 + 0.3);
+                });
+            } else if (type === 'encouraging') {
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(350, ctx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(450, ctx.currentTime + 0.4);
+                gain.gain.setValueAtTime(0.2, ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.5);
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                osc.start();
+                osc.stop(ctx.currentTime + 0.5);
+            }
+        }
+
+        function getFeedback(score, total) {
+            const percentage = (score / total) * 100;
+            let feedback = {};
+
+            if (percentage >= 85) {
+                feedback.class = "excellent";
+                feedback.title = "ممتاز! 🌟";
+                feedback.message = "أبدعت وتألقت يا بطل! أداء استثنائي ينم عن فهم عميق لمادة الرياضيات. واصل هذا التميز والتألق فالقمة بانتظارك دائماً! 👏✨";
+                feedback.sound = "applause";
+            } else if (percentage >= 60) {
+                feedback.class = "good";
+                feedback.title = "أحسنت! 👍";
+                feedback.message = "أتوقع أنك تحقق درجة أحسن في الاختبارات القادمة! واصل الاجتهاد والتركيز وستصل إلى ما تحلم به. 💪🚀";
+                feedback.sound = "success";
+            } else {
+                feedback.class = "encouraging";
+                feedback.title = "خطوة نحو النجاح! 💡";
+                feedback.message = "لا تقلق يا بطل، البدايات دائمًا تكون فرصة للتعلم والتطور. أنت تمتلك القدرة على التحسن، ومع قليل من المتابعة والتدريب ستتألق في المرات القادمة! 🌟🌱";
+                feedback.sound = "encouraging";
+            }
+            return feedback;
+        }
+
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.section-form').forEach(sec => sec.classList.remove('active'));
+            document.getElementById('resultContainer').style.display = 'none';
+
+            if (tabName === 'period') {
+                document.querySelectorAll('.tab-btn')[0].classList.add('active');
+                document.getElementById('periodSection').classList.add('active');
+            } else {
+                document.querySelectorAll('.tab-btn')[1].classList.add('active');
+                document.getElementById('teamsSection').classList.add('active');
+            }
+        }
+
+        function checkPeriodGrade() {
+            const idInput = document.getElementById('periodId').value.trim();
+            const resultBox = document.getElementById('resultContainer');
+
+            if (idInput === "") {
+                resultBox.style.display = "block";
+                resultBox.className = "result-box error";
+                resultBox.innerHTML = "<h3>تنبيه</h3><p style='text-align:center;'>الرجاء إدخال رقم الهوية الوطنية.</p>";
+                return;
+            }
+
+            if (periodData[idInput]) {
+                const student = periodData[idInput];
+                const fb = getFeedback(student.score, student.total);
+                playSound(fb.sound);
+
+                resultBox.style.display = "block";
+                resultBox.className = "result-box success";
+                resultBox.innerHTML = `
+                    <h3>نتيجة اختبار الفترة</h3>
+                    <div class="info-row"><span>اسم الطالب:</span><strong>${student.name}</strong></div>
+                    <div class="grade-badge">الدرجة: ${toArabicNumerals(student.score)} من ${toArabicNumerals(student.total)}</div>
+                    <div class="feedback-box ${fb.class}">
+                        <strong>${fb.title}</strong><br>
+                        ${fb.message}
+                    </div>
+                `;
+            } else {
+                resultBox.style.display = "block";
+                resultBox.className = "result-box error";
+                resultBox.innerHTML = `<h3>عذراً</h3><p style='text-align:center;'>الرقم (${toArabicNumerals(idInput)}) غير مسجل في اختبار الفترة.</p>`;
+            }
+        }
+
+        function checkTeamsGrade() {
+            const idInput = document.getElementById('teamsId').value.trim();
+            const resultBox = document.getElementById('resultContainer');
+
+            if (idInput === "") {
+                resultBox.style.display = "block";
+                resultBox.className = "result-box error";
+                resultBox.innerHTML = "<h3>تنبيه</h3><p style='text-align:center;'>الرجاء إدخال رقم الهوية الوطنية.</p>";
+                return;
+            }
+
+            if (teamsData[idInput]) {
+                const student = teamsData[idInput];
+                const fb = getFeedback(student.score, student.total);
+                playSound(fb.sound);
+
+                resultBox.style.display = "block";
+                resultBox.className = "result-box success";
+                resultBox.innerHTML = `
+                    <h3>نتيجة اختبارات Teams</h3>
+                    <div class="info-row"><span>اسم الطالب:</span><strong>${student.name}</strong></div>
+                    <div class="grade-badge" style="background: rgba(14, 165, 233, 0.08); color: #0284c7;">الدرجة: ${toArabicNumerals(student.score)} من ${toArabicNumerals(student.total)}</div>
+                    <div class="feedback-box ${fb.class}">
+                        <strong>${fb.title}</strong><br>
+                        ${fb.message}
+                    </div>
+                `;
+            } else {
+                resultBox.style.display = "block";
+                resultBox.className = "result-box error";
+                resultBox.innerHTML = `<h3>عذراً</h3><p style='text-align:center;'>لم يتم رصد درجات اختبار Teams لهذا الرقم (${toArabicNumerals(idInput)}) بعد.</p>`;
+            }
+        }
+    </script>
+</body>
+</html>
