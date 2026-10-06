@@ -3,495 +3,1324 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>بوابة نتائج الرياضيات - متوسطة عدي بن حاتم</title>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <title>رياضيات الصف الثاني متوسط - الألعاب التفاعلية</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Tajawal', sans-serif;
-        }
         body {
-            background: linear-gradient(135deg, #022442 0%, #001220 100%);
-            color: #1e293b;
+            font-family: 'Cairo', sans-serif;
+            background: linear-gradient(135deg, #FEF08A 0%, #FEFCE8 45%, #F8FAFC 100%);
             min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
         }
-        .container {
-            background: rgba(255, 255, 255, 0.97);
-            backdrop-filter: blur(16px);
-            border: 2px solid #f5af02;
-            border-radius: 24px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 25px rgba(245, 175, 2, 0.2);
-            width: 100%;
-            max-width: 480px;
-            padding: 40px 28px;
-            text-align: center;
+        .glass-card {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 2px solid rgba(234, 179, 8, 0.4);
+            box-shadow: 0 12px 35px -5px rgba(15, 23, 42, 0.08);
         }
-        h2 {
-            font-size: 1.9rem;
-            margin-bottom: 6px;
-            color: #022442; /* اللون الأزرق المطلوب */
-            font-weight: 800;
-            letter-spacing: -0.5px;
+        .glow-effect {
+            box-shadow: 0 0 30px rgba(234, 179, 8, 0.35);
         }
-        .subtitle {
-            font-size: 0.95rem;
-            color: #556270;
-            margin-bottom: 25px;
-            font-weight: 500;
+        @keyframes pulse-slow {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.04); }
         }
-        .tabs {
-            display: flex;
-            gap: 12px;
-            margin-bottom: 22px;
-            background: #fff8e1;
-            padding: 6px;
-            border-radius: 14px;
-            border: 1px solid #ffe082;
+        .animate-pulse-slow {
+            animation: pulse-slow 3s infinite ease-in-out;
         }
-        .tab-btn {
-            flex: 1;
-            padding: 11px;
-            background: transparent;
-            border: none;
-            border-radius: 10px;
-            font-size: 0.95rem;
-            font-weight: 700;
-            color: #556270;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        .tab-btn.active.period-tab {
-            background: #022442;
-            color: #f5af02;
-            box-shadow: 0 4px 12px rgba(2, 36, 66, 0.3);
-        }
-        .tab-btn.active.teams-tab {
-            background: #f5af02;
-            color: #022442;
-            box-shadow: 0 4px 12px rgba(245, 175, 2, 0.3);
-        }
-        .section-form {
-            display: none;
-        }
-        .section-form.active {
-            display: block;
-            animation: fadeIn 0.4s ease forwards;
-        }
-        .form-group {
-            margin-bottom: 20px;
-            text-align: right;
-        }
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-size: 0.95rem;
-            color: #022442;
-            font-weight: 700;
-        }
-        input[type="text"] {
-            width: 100%;
-            padding: 14px 16px;
-            background: #fffdf5;
-            border: 2px solid #ffe082;
-            border-radius: 14px;
-            color: #022442;
-            font-size: 1.1rem;
-            text-align: center;
-            letter-spacing: 2px;
-            transition: all 0.3s ease;
-        }
-        input[type="text"]:focus {
-            outline: none;
-            border-color: #f5af02;
-            background: #ffffff;
-            box-shadow: 0 0 0 4px rgba(245, 175, 2, 0.2);
-        }
-        button.action-btn {
-            width: 100%;
-            padding: 14px;
-            border: none;
-            border-radius: 14px;
-            font-size: 1.1rem;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        button.period-btn {
-            background: linear-gradient(135deg, #022442, #043868);
-            color: #f5af02;
-            box-shadow: 0 6px 16px rgba(2, 36, 66, 0.3);
-            border: 1px solid #f5af02;
-        }
-        button.period-btn:hover {
-            background: linear-gradient(135deg, #043868, #022442);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(2, 36, 66, 0.4);
-        }
-        button.teams-btn {
-            background: linear-gradient(135deg, #f5af02, #d49500);
-            color: #022442;
-            box-shadow: 0 6px 16px rgba(245, 175, 2, 0.3);
-        }
-        button.teams-btn:hover {
-            background: linear-gradient(135deg, #d49500, #b57c00);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(245, 175, 2, 0.4);
-        }
-        .result-box {
-            margin-top: 25px;
-            padding: 20px;
-            border-radius: 16px;
-            display: none;
-            animation: fadeIn 0.4s ease forwards;
-            text-align: right;
-        }
-        .result-box.success {
-            background: #fffdf5;
-            border: 1px solid #ffe082;
-        }
-        .result-box.error {
-            background: #fff5f5;
-            border: 1px solid #fca5a5;
-            color: #7f1d1d;
-        }
-        .result-box h3 {
-            font-size: 1.2rem;
-            margin-bottom: 12px;
-            text-align: center;
-            color: #022442;
-        }
-        .result-box.teams-result h3 {
-            color: #b57c00;
-        }
-        .info-row {
-            display: flex;
-            justify-content: space-between;
-            border-bottom: 1px dashed #ffe082;
-            padding-bottom: 8px;
-            margin-bottom: 10px;
-        }
-        .info-row span {
-            color: #556270;
-        }
-        .info-row strong {
-            color: #022442;
-        }
-        .grade-badge {
-            display: block;
-            text-align: center;
-            font-size: 1.35rem;
-            font-weight: 900;
-            padding: 10px 12px;
-            border-radius: 12px;
-            margin: 15px 0;
-        }
-        .grade-badge.period {
-            color: #022442;
-            background: rgba(2, 36, 66, 0.08);
-            border: 1px solid rgba(2, 36, 66, 0.2);
-        }
-        .grade-badge.teams {
-            color: #b57c00;
-            background: rgba(245, 175, 2, 0.12);
-            border: 1px solid rgba(245, 175, 2, 0.3);
-        }
-        .feedback-box {
-            padding: 12px 15px;
-            border-radius: 12px;
-            font-size: 0.98rem;
-            margin-top: 10px;
-            text-align: center;
-            font-weight: 500;
-        }
-        .feedback-box.excellent { background: #f0fdf4; color: #166534; border: 1px solid #bbf7d0; }
-        .feedback-box.good { background: #fffbeb; color: #92400e; border: 1px solid #fde68a; }
-        .feedback-box.encouraging { background: #f0f9ff; color: #0369a1; border: 1px solid #bae6fd; }
         
-        .footer {
-            margin-top: 30px;
-            font-size: 0.95rem;
-            color: #000000; /* اللون الأسود المطلوب */
+        .math-radical {
+            display: inline-flex;
+            align-items: baseline;
+            font-family: 'Cairo', sans-serif;
+            direction: rtl;
+            unicode-bidi: embed;
+            background: rgba(254, 240, 138, 0.45);
+            padding: 2px 10px;
+            border-radius: 8px;
+            border: 1px solid rgba(202, 138, 4, 0.4);
+            color: #0F172A;
             font-weight: 700;
+            margin: 0 3px;
+        }
+        .radical-content {
+            border-top: 2.5px solid #0F172A;
+            padding-top: 1px;
+            padding-left: 4px;
+            padding-right: 4px;
+            font-weight: 900;
+            direction: rtl;
+        }
+        .radical-symbol {
+            font-size: 1.25em;
+            margin-right: 3px;
+            font-weight: 900;
+            color: #1E3A8A;
+            display: inline-block;
+        }
+
+        .math-pow {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            vertical-align: middle;
+            font-family: 'Cairo', sans-serif;
+            direction: ltr;
+            background: rgba(254, 240, 138, 0.45);
+            padding: 2px 10px;
+            border-radius: 8px;
+            border: 1px solid rgba(202, 138, 4, 0.4);
+            color: #0F172A;
+            font-weight: 700;
+            margin: 0 4px;
+            line-height: 1;
+        }
+        .math-base {
+            font-size: 1.15em;
+            font-weight: 900;
+            order: 2;
+        }
+        .math-exp {
+            font-size: 0.7em;
+            font-weight: 900;
+            color: #1E3A8A;
+            margin-bottom: 1px;
+            order: 1;
+        }
+
+        .sci-notation {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            direction: rtl;
+            unicode-bidi: embed;
+            background: rgba(254, 240, 138, 0.45);
+            padding: 3px 12px;
+            border-radius: 8px;
+            border: 1px solid rgba(202, 138, 4, 0.4);
+            color: #0F172A;
+            font-weight: 700;
+            margin: 0 4px;
+            vertical-align: middle;
+        }
+        .sci-num {
+            font-weight: 900;
+            font-size: 1.1em;
+            margin-left: 6px;
+        }
+        .sci-times {
+            font-weight: 900;
+            margin-left: 6px;
+            color: #1E3A8A;
+        }
+        .sci-ten-wrapper {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            vertical-align: middle;
+            line-height: 1;
+        }
+        .sci-ten-base {
+            font-size: 1.1em;
+            font-weight: 900;
+            order: 2;
+        }
+        .sci-ten-exp {
+            font-size: 0.7em;
+            font-weight: 900;
+            color: #1E3A8A;
+            margin-bottom: 1px;
+            order: 1;
+        }
+
+        .repeating-decimal {
+            direction: rtl;
+            unicode-bidi: embed;
+            display: inline-block;
+            font-family: 'Cairo', sans-serif;
+            background: rgba(254, 240, 138, 0.45);
+            padding: 2px 10px;
+            border-radius: 8px;
+            border: 1px solid rgba(202, 138, 4, 0.4);
+            color: #0F172A;
+            font-weight: 700;
+        }
+        .repeating-bar {
+            text-decoration: overline;
+            text-decoration-color: #CA8A04;
+            text-decoration-thickness: 3px;
+        }
+        .math-frac {
+            display: inline-flex;
+            flex-direction: column;
+            vertical-align: middle;
             text-align: center;
-            border-top: 1px solid #ffe082;
-            padding-top: 18px;
-            line-height: 1.6;
+            font-size: 0.95em;
+            padding: 2px 8px;
+            direction: rtl;
+            unicode-bidi: embed;
+            background: rgba(254, 240, 138, 0.45);
+            border-radius: 8px;
+            border: 1px solid rgba(202, 138, 4, 0.4);
+            margin: 0 3px;
+            color: #0F172A;
         }
-        .footer span {
-            color: #000000; /* اللون الأسود للاسم */
-            font-weight: 700;
+        .math-frac-num {
+            border-bottom: 2.5px solid #0F172A;
+            padding: 0 4px 2px 4px;
+            line-height: 1.1;
+            font-weight: 900;
         }
-        .footer-rights {
-            font-size: 0.75rem;
-            color: #556270;
-            font-weight: 400;
-            display: block;
-            margin-top: 4px;
+        .math-frac-den {
+            padding: 2px 4px 0 4px;
+            line-height: 1.1;
+            font-weight: 900;
         }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+        .rocket-game-bg {
+            background: radial-gradient(circle at center, #1E3A8A 0%, #0F172A 100%);
+        }
+        .football-pitch {
+            background: linear-gradient(to bottom, #15803D 0%, #166534 100%);
+        }
+        .radar-screen {
+            background: radial-gradient(circle at center, #064E3B 0%, #022C22 100%);
+        }
+        .pythagoras-lab {
+            background: linear-gradient(135deg, #1E1B4B 0%, #312E81 100%);
         }
     </style>
 </head>
-<body>
+<body class="text-slate-900 flex flex-col items-center justify-start pt-1 sm:pt-2 pb-6 px-3 sm:px-6">
 
-    <div class="container">
-        <h2>بوابة نتائج الرياضيات</h2>
-        <p class="subtitle">متوسطة عدي بن حاتم - النظام التفاعلي</p>
-        
-        <div class="tabs">
-            <button class="tab-btn active period-tab" onclick="switchTab('period')">اختبار الفترة</button>
-            <button class="tab-btn teams-tab" onclick="switchTab('teams')">اختبارات Teams</button>
-        </div>
+    <header class="w-full max-w-5xl text-center mb-3">
+        <h1 class="text-2xl sm:text-4xl lg:text-5xl font-black tracking-tight mb-1 text-blue-950">
+            رياضيات الصف الثاني متوسط
+        </h1>
+        <p class="text-yellow-600 text-xs sm:text-sm font-extrabold">إعداد الاستاذ: عبدالمحيي السلمي</p>
+    </header>
 
-        <div id="periodSection" class="section-form active">
-            <div class="form-group">
-                <label for="periodId">رقم الهوية لاختبار الفترة:</label>
-                <input type="text" id="periodId" maxlength="10" placeholder="مثال: 1234567890" inputmode="numeric">
+    <div id="home-screen" class="w-full max-w-5xl text-center">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-4xl mx-auto px-2">
+            
+            <!-- Multiplication Table Game (Interactive Table Selector) -->
+            <div onclick="playSound('click'); openMultTableSelector()" class="glass-card rounded-3xl p-5 glow-effect cursor-pointer hover:border-blue-950 transition-all duration-300 transform hover:-translate-y-1.5 group text-right flex flex-col justify-between bg-gradient-to-br from-yellow-50/80 via-white to-white border-2 border-yellow-500">
+                <div>
+                    <div class="flex items-start justify-between mb-3">
+                        <div class="w-14 h-14 rounded-2xl bg-yellow-400 border-2 border-yellow-500 flex items-center justify-center text-blue-950 text-2xl shadow-md group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-graduation-cap"></i>
+                        </div>
+                        <span class="inline-flex items-center gap-1.5 text-xs font-black text-yellow-900 bg-yellow-300 px-3 py-1.5 rounded-xl border border-yellow-400">
+                            <i class="fa-solid fa-star"></i> من جدول ١ إلى ١٠
+                        </span>
+                    </div>
+                    <h2 class="text-xl font-black text-blue-950 mb-1.5">لعبة حفظ جدول الضرب</h2>
+                    <p class="text-xs sm:text-sm text-slate-600 mb-4 font-medium leading-relaxed">اختر الجدول الذي تريد التدرب عليه (من الجدول 1 إلى 10) أو تدرب على الجدول الشامل لاختبار سرعة بديهتك!</p>
+                </div>
+                <div class="flex items-center justify-end pt-3 border-t border-yellow-200">
+                    <span class="inline-flex items-center gap-2 bg-blue-950 text-yellow-400 text-xs font-bold px-4 py-2.5 rounded-xl group-hover:bg-yellow-400 group-hover:text-blue-950 transition-colors shadow-md">
+                        <span>اختر الجدول وابدأ</span>
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </span>
+                </div>
             </div>
-            <button class="action-btn period-btn" onclick="checkPeriodGrade()">عرض درجة الفترة</button>
-        </div>
 
-        <div id="teamsSection" class="section-form">
-            <div class="form-group">
-                <label for="teamsId">رقم الهوية لاختبارات Teams:</label>
-                <input type="text" id="teamsId" maxlength="10" placeholder="مثال: 1234567890" inputmode="numeric">
+            <!-- Lesson 1: Powers and Exponents -->
+            <div onclick="playSound('click'); startGame('powers')" class="glass-card rounded-3xl p-5 glow-effect cursor-pointer hover:border-blue-950 transition-all duration-300 transform hover:-translate-y-1.5 group text-right flex flex-col justify-between bg-gradient-to-br from-blue-50/50 via-white to-white">
+                <div>
+                    <div class="flex items-start justify-between mb-3">
+                        <div class="w-14 h-14 rounded-2xl bg-blue-950 border-2 border-blue-900 flex items-center justify-center text-yellow-400 text-2xl shadow-md group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-bolt"></i>
+                        </div>
+                        <span class="inline-flex items-center gap-1.5 text-xs font-black text-yellow-500 bg-blue-950 px-3 py-1.5 rounded-xl border border-yellow-400">
+                            <i class="fa-solid fa-bolt"></i> لعبة مولد الطاقة الأسية
+                        </span>
+                    </div>
+                    <h2 class="text-xl font-black text-blue-950 mb-1.5">القوى والأسس</h2>
+                    <p class="text-xs sm:text-sm text-slate-600 mb-4 font-medium leading-relaxed">تدرب على حساب القوى، الأسس، والضرب المتكرر لشحن مولد الطاقة.</p>
+                </div>
+                <div class="flex items-center justify-end pt-3 border-t border-blue-100">
+                    <span class="inline-flex items-center gap-2 bg-blue-950 text-yellow-400 text-xs font-bold px-4 py-2.5 rounded-xl group-hover:bg-yellow-400 group-hover:text-blue-950 transition-colors shadow-md">
+                        <span>ابدأ اللعبة</span>
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </span>
+                </div>
             </div>
-            <button class="action-btn teams-btn" onclick="checkTeamsGrade()">عرض درجة Teams</button>
-        </div>
 
-        <div id="resultContainer" class="result-box"></div>
+            <!-- Lesson 2: Scientific Notation Radar Challenge -->
+            <div onclick="playSound('click'); startGame('scientific-radar')" class="glass-card rounded-3xl p-5 glow-effect cursor-pointer hover:border-blue-950 transition-all duration-300 transform hover:-translate-y-1.5 group text-right flex flex-col justify-between bg-gradient-to-br from-blue-50/50 via-white to-white">
+                <div>
+                    <div class="flex items-start justify-between mb-3">
+                        <div class="w-14 h-14 rounded-2xl bg-yellow-400 border-2 border-yellow-500 flex items-center justify-center text-blue-950 text-2xl shadow-md group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-radar"></i>
+                        </div>
+                        <span class="inline-flex items-center gap-1.5 text-xs font-black text-yellow-500 bg-blue-950 px-3 py-1.5 rounded-xl border border-yellow-400">
+                            <i class="fa-solid fa-satellite"></i> لعبة تحدي رادار الصيغة العلمية
+                        </span>
+                    </div>
+                    <h2 class="text-xl font-black text-blue-950 mb-1.5">الصيغة العلمية (رادار التحويل)</h2>
+                    <p class="text-xs sm:text-sm text-slate-600 mb-4 font-medium leading-relaxed">٥ أسئلة متنوعة لاختبار مهارات التحويل بين الصيغة القياسية والعلمية ذهاباً وإياباً.</p>
+                </div>
+                <div class="flex items-center justify-end pt-3 border-t border-blue-100">
+                    <span class="inline-flex items-center gap-2 bg-blue-950 text-yellow-400 text-xs font-bold px-4 py-2.5 rounded-xl group-hover:bg-yellow-400 group-hover:text-blue-950 transition-colors shadow-md">
+                        <span>ابدأ اللعبة</span>
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </span>
+                </div>
+            </div>
 
-        <div class="footer">
-            إعداد وتنفيذ المعلم: <span>عبدالمحيي السلمي</span>
-            <span class="footer-rights">جميع الحقوق محفوظة © ٢٠٢٦</span>
+            <!-- Lesson 3: Square Roots Estimation -->
+            <div onclick="playSound('click'); startGame('roots')" class="glass-card rounded-3xl p-5 glow-effect cursor-pointer hover:border-blue-950 transition-all duration-300 transform hover:-translate-y-1.5 group text-right flex flex-col justify-between bg-gradient-to-br from-blue-50/50 via-white to-white">
+                <div>
+                    <div class="flex items-start justify-between mb-3">
+                        <div class="w-14 h-14 rounded-2xl bg-yellow-400 border-2 border-yellow-500 flex items-center justify-center text-blue-950 text-2xl shadow-md group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-square-root-variable"></i>
+                        </div>
+                        <span class="inline-flex items-center gap-1.5 text-xs font-black text-yellow-500 bg-blue-950 px-3 py-1.5 rounded-xl border border-yellow-400">
+                            <i class="fa-solid fa-key"></i> تحدي فك شفرة الخزنة السرية
+                        </span>
+                    </div>
+                    <h2 class="text-xl font-black text-blue-950 mb-1.5">تقدير الجذور التربيعية</h2>
+                    <p class="text-xs sm:text-sm text-slate-600 mb-4 font-medium leading-relaxed">تدرب على إيجاد تقدير الجذور التربيعية لأقرب عدد كلي لفتح الخزنة السرية.</p>
+                </div>
+                <div class="flex items-center justify-end pt-3 border-t border-blue-100">
+                    <span class="inline-flex items-center gap-2 bg-blue-950 text-yellow-400 text-xs font-bold px-4 py-2.5 rounded-xl group-hover:bg-yellow-400 group-hover:text-blue-950 transition-colors shadow-md">
+                        <span>ابدأ اللعبة</span>
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </span>
+                </div>
+            </div>
+
+            <!-- Lesson 4: Real Numbers -->
+            <div onclick="playSound('click'); startGame('real-numbers')" class="glass-card rounded-3xl p-5 glow-effect cursor-pointer hover:border-blue-950 transition-all duration-300 transform hover:-translate-y-1.5 group text-right flex flex-col justify-between bg-gradient-to-br from-blue-50/50 via-white to-white">
+                <div>
+                    <div class="flex items-start justify-between mb-3">
+                        <div class="w-14 h-14 rounded-2xl bg-blue-950 border-2 border-blue-900 flex items-center justify-center text-yellow-400 text-2xl shadow-md group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-atom"></i>
+                        </div>
+                        <span class="inline-flex items-center gap-1.5 text-xs font-black text-yellow-500 bg-blue-950 px-3 py-1.5 rounded-xl border border-yellow-400">
+                            <i class="fa-solid fa-key"></i> تحدي فك شفرة الخزنة السرية
+                        </span>
+                    </div>
+                    <h2 class="text-xl font-black text-blue-950 mb-1.5">مجموعة الأعداد الحقيقية</h2>
+                    <p class="text-xs sm:text-sm text-slate-600 mb-4 font-medium leading-relaxed">صنف الأعداد إلى طبيعية، كلية، صحيحة، نسبية، وغير نسبية لفك الخزنة.</p>
+                </div>
+                <div class="flex items-center justify-end pt-3 border-t border-blue-100">
+                    <span class="inline-flex items-center gap-2 bg-blue-950 text-yellow-400 text-xs font-bold px-4 py-2.5 rounded-xl group-hover:bg-yellow-400 group-hover:text-blue-950 transition-colors shadow-md">
+                        <span>ابدأ اللعبة</span>
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </span>
+                </div>
+            </div>
+
+            <!-- Lesson 5: Multiplying Rational Numbers -->
+            <div onclick="playSound('click'); startGame('multiply-rationals')" class="glass-card rounded-3xl p-5 glow-effect cursor-pointer hover:border-blue-950 transition-all duration-300 transform hover:-translate-y-1.5 group text-right flex flex-col justify-between bg-gradient-to-br from-blue-50/50 via-white to-white">
+                <div>
+                    <div class="flex items-start justify-between mb-3">
+                        <div class="w-14 h-14 rounded-2xl bg-yellow-400 border-2 border-yellow-500 flex items-center justify-center text-blue-950 text-2xl shadow-md group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-rocket"></i>
+                        </div>
+                        <span class="inline-flex items-center gap-1.5 text-xs font-black text-yellow-500 bg-blue-950 px-3 py-1.5 rounded-xl border border-yellow-400">
+                            <i class="fa-solid fa-rocket"></i> لعبة إطلاق الصاروخ الفضائي
+                        </span>
+                    </div>
+                    <h2 class="text-xl font-black text-blue-950 mb-1.5">ضرب الأعداد النسبية</h2>
+                    <p class="text-xs sm:text-sm text-slate-600 mb-4 font-medium leading-relaxed">أجب عن أسئلة ضرب الكسور والأعداد النسبية لملء خزان الوقود وإطلاق الصاروخ للفضاء!</p>
+                </div>
+                <div class="flex items-center justify-end pt-3 border-t border-blue-100">
+                    <span class="inline-flex items-center gap-2 bg-blue-950 text-yellow-400 text-xs font-bold px-4 py-2.5 rounded-xl group-hover:bg-yellow-400 group-hover:text-blue-950 transition-colors shadow-md">
+                        <span>ابدأ اللعبة</span>
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </span>
+                </div>
+            </div>
+
+            <!-- Lesson 6: Adding Rational Numbers -->
+            <div onclick="playSound('click'); startGame('add-rationals')" class="glass-card rounded-3xl p-5 glow-effect cursor-pointer hover:border-blue-950 transition-all duration-300 transform hover:-translate-y-1.5 group text-right flex flex-col justify-between bg-gradient-to-br from-blue-50/50 via-white to-white">
+                <div>
+                    <div class="flex items-start justify-between mb-3">
+                        <div class="w-14 h-14 rounded-2xl bg-blue-950 border-2 border-blue-900 flex items-center justify-center text-yellow-400 text-2xl shadow-md group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-futbol"></i>
+                        </div>
+                        <span class="inline-flex items-center gap-1.5 text-xs font-black text-yellow-500 bg-blue-950 px-3 py-1.5 rounded-xl border border-yellow-400">
+                            <i class="fa-solid fa-futbol"></i> لعبة تحدي ضربة الجزاء الرياضية
+                        </span>
+                    </div>
+                    <h2 class="text-xl font-black text-blue-950 mb-1.5">جمع الأعداد النسبية</h2>
+                    <p class="text-xs sm:text-sm text-slate-600 mb-4 font-medium leading-relaxed">سجل الأهداف في مرمى الخصم عبر الإجابة الصحيحة على أسئلة جمع وطرح الأعداد النسبية.</p>
+                </div>
+                <div class="flex items-center justify-end pt-3 border-t border-blue-100">
+                    <span class="inline-flex items-center gap-2 bg-blue-950 text-yellow-400 text-xs font-bold px-4 py-2.5 rounded-xl group-hover:bg-yellow-400 group-hover:text-blue-950 transition-colors shadow-md">
+                        <span>ابدأ اللعبة</span>
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </span>
+                </div>
+            </div>
+
+            <!-- Lesson 7: Pythagorean Theorem (New) -->
+            <div onclick="playSound('click'); startGame('pythagoras')" class="glass-card rounded-3xl p-5 glow-effect cursor-pointer hover:border-blue-950 transition-all duration-300 transform hover:-translate-y-1.5 group text-right flex flex-col justify-between bg-gradient-to-br from-indigo-50/80 via-white to-white border-2 border-indigo-500 md:col-span-2">
+                <div>
+                    <div class="flex items-start justify-between mb-3">
+                        <div class="w-14 h-14 rounded-2xl bg-indigo-900 border-2 border-indigo-600 flex items-center justify-center text-yellow-400 text-2xl shadow-md group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-shapes"></i>
+                        </div>
+                        <span class="inline-flex items-center gap-1.5 text-xs font-black text-indigo-900 bg-indigo-200 px-3 py-1.5 rounded-xl border border-indigo-300">
+                            <i class="fa-solid fa-compass-drafting"></i> مختبر الهندسة وقياس المثلثات
+                        </span>
+                    </div>
+                    <h2 class="text-xl font-black text-blue-950 mb-1.5">نظرية فيثاغورس</h2>
+                    <p class="text-xs sm:text-sm text-slate-600 mb-4 font-medium leading-relaxed">تدرب على حساب طول الوتر وساق المثلث قائم الزاوية واختبار صحة النظريات الهندسية في مختبر فيثاغورس التفاعلي!</p>
+                </div>
+                <div class="flex items-center justify-end pt-3 border-t border-indigo-100">
+                    <span class="inline-flex items-center gap-2 bg-indigo-950 text-yellow-400 text-xs font-bold px-4 py-2.5 rounded-xl group-hover:bg-yellow-400 group-hover:text-indigo-950 transition-colors shadow-md">
+                        <span>ابدأ لعبة فيثاغورس</span>
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </span>
+                </div>
+            </div>
+
         </div>
     </div>
 
+    <div id="mult-selector-screen" class="hidden w-full max-w-3xl mx-auto">
+        <button onclick="playSound('click'); backToHome()" class="mb-2.5 inline-flex items-center gap-2 text-xs font-bold bg-white hover:bg-yellow-100 text-blue-950 px-4 py-2 rounded-xl border-2 border-yellow-400 shadow-sm transition-colors">
+            <i class="fa-solid fa-arrow-right"></i>
+            <span>العودة للقائمة الرئيسية</span>
+        </button>
+
+        <div class="glass-card rounded-3xl p-6 glow-effect text-right border-2 border-yellow-400">
+            <div class="text-center mb-6">
+                <span class="inline-flex items-center gap-2 bg-yellow-400 border-2 border-yellow-500 px-4 py-1.5 rounded-full text-blue-950 text-xs sm:text-sm mb-2 font-black shadow-sm">
+                    <i class="fa-solid fa-graduation-cap"></i> اختر جدول الضرب
+                </span>
+                <h2 class="text-2xl font-black text-blue-950 mb-1">اختر الجدول الذي تريد التدرب عليه من (١ إلى ١٠)</h2>
+                <p class="text-slate-600 text-xs sm:text-sm font-semibold">يمكنك اختيار جدول معين للتركيز عليه أو اختبار جميع الجداول معاً.</p>
+            </div>
+
+            <div class="grid grid-cols-2 sm:grid-cols-5 gap-3 mb-6">
+                <button onclick="playSound('click'); startMultTableGame(1)" class="p-4 rounded-2xl bg-blue-900 text-white font-black hover:bg-blue-950 hover:scale-105 transition-all shadow-md border-2 border-yellow-400 flex flex-col items-center justify-center">
+                    <span class="text-xs text-yellow-300 font-bold mb-1">جدول</span>
+                    <span class="text-2xl">١</span>
+                </button>
+                <button onclick="playSound('click'); startMultTableGame(2)" class="p-4 rounded-2xl bg-blue-900 text-white font-black hover:bg-blue-950 hover:scale-105 transition-all shadow-md border-2 border-yellow-400 flex flex-col items-center justify-center">
+                    <span class="text-xs text-yellow-300 font-bold mb-1">جدول</span>
+                    <span class="text-2xl">٢</span>
+                </button>
+                <button onclick="playSound('click'); startMultTableGame(3)" class="p-4 rounded-2xl bg-blue-900 text-white font-black hover:bg-blue-950 hover:scale-105 transition-all shadow-md border-2 border-yellow-400 flex flex-col items-center justify-center">
+                    <span class="text-xs text-yellow-300 font-bold mb-1">جدول</span>
+                    <span class="text-2xl">٣</span>
+                </button>
+                <button onclick="playSound('click'); startMultTableGame(4)" class="p-4 rounded-2xl bg-blue-900 text-white font-black hover:bg-blue-950 hover:scale-105 transition-all shadow-md border-2 border-yellow-400 flex flex-col items-center justify-center">
+                    <span class="text-xs text-yellow-300 font-bold mb-1">جدول</span>
+                    <span class="text-2xl">٤</span>
+                </button>
+                <button onclick="playSound('click'); startMultTableGame(5)" class="p-4 rounded-2xl bg-blue-900 text-white font-black hover:bg-blue-950 hover:scale-105 transition-all shadow-md border-2 border-yellow-400 flex flex-col items-center justify-center">
+                    <span class="text-xs text-yellow-300 font-bold mb-1">جدول</span>
+                    <span class="text-2xl">٥</span>
+                </button>
+                <button onclick="playSound('click'); startMultTableGame(6)" class="p-4 rounded-2xl bg-blue-900 text-white font-black hover:bg-blue-950 hover:scale-105 transition-all shadow-md border-2 border-yellow-400 flex flex-col items-center justify-center">
+                    <span class="text-xs text-yellow-300 font-bold mb-1">جدول</span>
+                    <span class="text-2xl">٦</span>
+                </button>
+                <button onclick="playSound('click'); startMultTableGame(7)" class="p-4 rounded-2xl bg-blue-900 text-white font-black hover:bg-blue-950 hover:scale-105 transition-all shadow-md border-2 border-yellow-400 flex flex-col items-center justify-center">
+                    <span class="text-xs text-yellow-300 font-bold mb-1">جدول</span>
+                    <span class="text-2xl">٧</span>
+                </button>
+                <button onclick="playSound('click'); startMultTableGame(8)" class="p-4 rounded-2xl bg-blue-900 text-white font-black hover:bg-blue-950 hover:scale-105 transition-all shadow-md border-2 border-yellow-400 flex flex-col items-center justify-center">
+                    <span class="text-xs text-yellow-300 font-bold mb-1">جدول</span>
+                    <span class="text-2xl">٨</span>
+                </button>
+                <button onclick="playSound('click'); startMultTableGame(9)" class="p-4 rounded-2xl bg-blue-900 text-white font-black hover:bg-blue-950 hover:scale-105 transition-all shadow-md border-2 border-yellow-400 flex flex-col items-center justify-center">
+                    <span class="text-xs text-yellow-300 font-bold mb-1">جدول</span>
+                    <span class="text-2xl">٩</span>
+                </button>
+                <button onclick="playSound('click'); startMultTableGame(10)" class="p-4 rounded-2xl bg-blue-900 text-white font-black hover:bg-blue-950 hover:scale-105 transition-all shadow-md border-2 border-yellow-400 flex flex-col items-center justify-center">
+                    <span class="text-xs text-yellow-300 font-bold mb-1">جدول</span>
+                    <span class="text-2xl">١٠</span>
+                </button>
+            </div>
+
+            <div class="text-center">
+                <button onclick="playSound('click'); startMultTableGame('all')" class="w-full sm:w-auto bg-yellow-400 hover:bg-yellow-500 text-blue-950 font-black px-8 py-4 rounded-2xl border-2 border-yellow-600 shadow-lg text-lg transition-all transform hover:scale-105">
+                    <i class="fa-solid fa-trophy ml-2"></i> التدريب الشامل (كل الجداول من ١ إلى ١٠)
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="game-container" class="hidden w-full max-w-2xl mx-auto">
+        <button onclick="playSound('click'); backToHome()" class="mb-2.5 inline-flex items-center gap-2 text-xs font-bold bg-white hover:bg-yellow-100 text-blue-950 px-4 py-2 rounded-xl border-2 border-yellow-400 shadow-sm transition-colors">
+            <i class="fa-solid fa-arrow-right"></i>
+            <span>العودة لقائمة الدروس</span>
+        </button>
+
+        <div class="text-center mb-3">
+            <div id="game-badge" class="inline-flex items-center gap-2 bg-yellow-400 border-2 border-yellow-500 px-4 py-1.5 rounded-full text-blue-950 text-xs sm:text-sm mb-1.5 font-black shadow-sm">
+                <i class="fa-solid fa-brain"></i> تحدي الرياضيات التفاعلي
+            </div>
+            <h2 id="game-title" class="text-xl sm:text-2xl font-black tracking-tight mb-1 text-blue-950">
+                عنوان اللعبة
+            </h2>
+            <p id="game-subtitle" class="text-slate-600 text-xs sm:text-sm font-semibold">تعليمات اللعبة هنا...</p>
+        </div>
+
+        <main class="glass-card rounded-3xl p-4 sm:p-6 glow-effect relative overflow-hidden shadow-xl border-2 border-yellow-400/60">
+            
+            <div id="vault-status-panel" class="hidden flex-col sm:flex-row items-center justify-between bg-blue-950 text-white rounded-2xl p-3 mb-4 border border-yellow-400/40 gap-3">
+                <div class="flex items-center gap-3 w-full sm:w-auto justify-center sm:justify-start">
+                    <div id="vault-icon-container" class="w-12 h-12 rounded-xl bg-yellow-400 border border-yellow-500 flex items-center justify-center text-blue-950 text-xl shadow-lg">
+                        <i id="vault-lock-icon" class="fa-solid fa-lock"></i>
+                    </div>
+                    <div>
+                        <div class="text-xs text-yellow-300 font-medium">حالة الخزنة</div>
+                        <div id="vault-status-text" class="text-sm font-bold text-yellow-400">مغلقة - بانتظار الشفرة</div>
+                    </div>
+                </div>
+                <div class="text-center bg-blue-900 px-4 py-1.5 rounded-xl border border-blue-800 w-full sm:w-auto">
+                    <div class="text-xs text-yellow-300">الوقت المتبقي</div>
+                    <div id="timer-display" class="text-base sm:text-lg font-black text-yellow-400 font-mono">٠٣:٠٠</div>
+                </div>
+            </div>
+
+            <div id="vault-digits-panel" class="hidden mb-5">
+                <div class="text-center text-xs font-black text-blue-950 uppercase tracking-wider mb-2">شفرة الخزنة (الأرقام الأربعة)</div>
+                <div class="grid grid-cols-4 gap-2.5 max-w-sm mx-auto">
+                    <div id="digit-box-0" class="h-14 sm:h-16 bg-slate-100 border-2 border-yellow-500/60 rounded-2xl flex items-center justify-center text-xl sm:text-2xl font-black text-slate-400 shadow-inner">؟</div>
+                    <div id="digit-box-1" class="h-14 sm:h-16 bg-slate-100 border-2 border-yellow-500/60 rounded-2xl flex items-center justify-center text-xl sm:text-2xl font-black text-slate-400 shadow-inner">؟</div>
+                    <div id="digit-box-2" class="h-14 sm:h-16 bg-slate-100 border-2 border-yellow-500/60 rounded-2xl flex items-center justify-center text-xl sm:text-2xl font-black text-slate-400 shadow-inner">؟</div>
+                    <div id="digit-box-3" class="h-14 sm:h-16 bg-slate-100 border-2 border-yellow-500/60 rounded-2xl flex items-center justify-center text-xl sm:text-2xl font-black text-slate-400 shadow-inner">؟</div>
+                </div>
+            </div>
+
+            <div id="mult-status-panel" class="hidden bg-gradient-to-r from-amber-500 to-yellow-600 text-white rounded-2xl p-4 mb-4 border border-yellow-300 text-center relative overflow-hidden shadow-inner">
+                <div class="flex justify-between items-center mb-2 px-2">
+                    <span class="text-xs text-yellow-100 font-bold"><i class="fa-solid fa-star ml-1"></i> النتيجة: <span id="mult-score-text" class="text-yellow-200">٠ / ٥</span></span>
+                    <span class="text-xs text-yellow-100 font-bold">السؤال: <span id="mult-stage-text">١ / ٥</span></span>
+                </div>
+                <div class="py-1 flex flex-col items-center justify-center">
+                    <div class="text-2xl text-yellow-100 font-black animate-pulse-slow">
+                        <i class="fa-solid fa-brain"></i> تحدي جدول الضرب الذكي
+                    </div>
+                    <div class="w-full bg-amber-900/40 h-2.5 rounded-full mt-2 overflow-hidden border border-yellow-300/40 max-w-xs">
+                        <div id="mult-progress-bar" class="bg-yellow-200 h-full w-0 transition-all duration-500"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="power-status-panel" class="hidden bg-gradient-to-r from-blue-900 to-indigo-950 text-white rounded-2xl p-4 mb-4 border border-yellow-400/50 text-center relative overflow-hidden shadow-inner">
+                <div class="flex justify-between items-center mb-2 px-2">
+                    <span class="text-xs text-yellow-300 font-bold"><i class="fa-solid fa-bolt ml-1"></i> طاقة المولد: <span id="power-energy-text" class="text-yellow-400">٠٪</span></span>
+                    <span class="text-xs text-yellow-300 font-bold">المستوى: <span id="power-stage-text">١ / ٤</span></span>
+                </div>
+                <div class="py-2 flex flex-col items-center justify-center">
+                    <div id="power-icon" class="text-4xl text-yellow-400 transition-all duration-500 transform animate-pulse-slow">
+                        <i class="fa-solid fa-bolt"></i>
+                    </div>
+                    <div class="w-full bg-slate-800 h-3 rounded-full mt-2.5 overflow-hidden border border-yellow-500/40 max-w-xs">
+                        <div id="power-energy-bar" class="bg-yellow-400 h-full w-0 transition-all duration-500"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="radar-status-panel" class="hidden radar-screen text-white rounded-2xl p-4 mb-4 border border-yellow-400/50 text-center relative overflow-hidden shadow-inner">
+                <div class="flex justify-between items-center mb-2 px-2">
+                    <span class="text-xs text-yellow-300 font-bold"><i class="fa-solid fa-radar ml-1"></i> مسح الرادار: <span id="radar-progress-text" class="text-yellow-400">٠٪</span></span>
+                    <span class="text-xs text-yellow-300 font-bold">السؤال: <span id="radar-stage-text">١ / ٥</span></span>
+                </div>
+                <div class="py-2 flex flex-col items-center justify-center">
+                    <div id="radar-icon" class="text-4xl text-yellow-400 transition-all duration-500 transform animate-pulse-slow">
+                        <i class="fa-solid fa-satellite-dish"></i>
+                    </div>
+                    <div class="w-full bg-slate-900 h-3 rounded-full mt-2.5 overflow-hidden border border-yellow-500/40 max-w-xs">
+                        <div id="radar-progress-bar" class="bg-yellow-400 h-full w-0 transition-all duration-500"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="rocket-status-panel" class="hidden rocket-game-bg text-white rounded-2xl p-4 mb-4 border border-yellow-400/50 text-center relative overflow-hidden shadow-inner">
+                <div class="flex justify-between items-center mb-2 px-2">
+                    <span class="text-xs text-yellow-300 font-bold"><i class="fa-solid fa-battery-three-quarters ml-1"></i> طاقة الصاروخ: <span id="rocket-fuel-text" class="text-yellow-400">٠٪</span></span>
+                    <span class="text-xs text-yellow-300 font-bold">المحطة: <span id="rocket-stage-text">١ / ٤</span></span>
+                </div>
+                <div class="py-2 flex flex-col items-center justify-center">
+                    <div id="rocket-icon" class="text-4xl text-yellow-400 transition-all duration-500 transform translate-y-1">
+                        <i class="fa-solid fa-rocket animate-pulse-slow"></i>
+                    </div>
+                    <div class="w-full bg-slate-800 h-3 rounded-full mt-2.5 overflow-hidden border border-yellow-500/40 max-w-xs">
+                        <div id="rocket-fuel-bar" class="bg-yellow-400 h-full w-0 transition-all duration-500"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="football-status-panel" class="hidden football-pitch text-white rounded-2xl p-3.5 mb-4 border border-yellow-400/50 text-center relative overflow-hidden shadow-inner">
+                <div class="flex justify-between items-center mb-2 px-2">
+                    <span class="text-xs text-yellow-200 font-bold"><i class="fa-solid fa-futbol ml-1"></i> الأهداف المسجلة: <span id="football-score-text" class="text-yellow-400">٠ / ٤</span></span>
+                    <span class="text-xs text-yellow-200 font-bold">ضربة الجزاء: <span id="football-shot-text">١</span></span>
+                </div>
+                <div class="py-1 flex items-center justify-center">
+                    <div class="border-2 border-white/80 border-b-0 w-60 h-16 rounded-t-xl flex items-center justify-center relative bg-emerald-950/40">
+                        <div class="absolute inset-x-0 bottom-0 border-b border-white/60"></div>
+                        <span id="goal-status-msg" class="text-xs font-bold text-yellow-300">سدد الكرة بتحديد الإجابة الصحيحة!</span>
+                        <div id="ball-indicator" class="absolute bottom-1 right-8 text-white text-lg transition-all duration-500">
+                            <i class="fa-solid fa-futbol text-yellow-400"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="pythagoras-status-panel" class="hidden pythagoras-lab text-white rounded-2xl p-4 mb-4 border border-yellow-400/50 text-center relative overflow-hidden shadow-inner">
+                <div class="flex justify-between items-center mb-2 px-2">
+                    <span class="text-xs text-yellow-300 font-bold"><i class="fa-solid fa-triangle-exclamation ml-1"></i> تقدم المختبر: <span id="pythagoras-progress-text" class="text-yellow-400">٠٪</span></span>
+                    <span class="text-xs text-yellow-300 font-bold">السؤال: <span id="pythagoras-stage-text">١ / ٤</span></span>
+                </div>
+                <div class="py-2 flex flex-col items-center justify-center">
+                    <div class="text-3xl text-yellow-400 mb-1 animate-pulse-slow">
+                        <i class="fa-solid fa-compass-drafting"></i>
+                    </div>
+                    <div class="w-full bg-indigo-950 h-3 rounded-full mt-2.5 overflow-hidden border border-yellow-500/40 max-w-xs">
+                        <div id="pythagoras-progress-bar" class="bg-yellow-400 h-full w-0 transition-all duration-500"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="quiz-section">
+                <div class="flex items-center justify-between mb-3">
+                    <span id="question-counter" class="text-xs font-bold bg-blue-950 text-yellow-300 px-3 py-1.5 rounded-full border border-yellow-500/40">السؤال ١ من ٥</span>
+                    <span id="question-type-badge" class="text-xs text-blue-950 bg-yellow-400 px-3 py-1.5 rounded-full border border-yellow-500 font-black"><i class="fa-solid fa-circle-question text-[10px] ml-1"></i> اختيار من متعدد</span>
+                </div>
+
+                <div class="bg-blue-50 border-2 border-blue-200 p-4 sm:p-5 rounded-2xl mb-4 shadow-sm">
+                    <h2 id="question-text" class="text-base sm:text-lg font-bold text-blue-950 leading-relaxed mb-1">جاري تحميل السؤال...</h2>
+                    <p class="text-xs text-slate-600 font-semibold">اختر الإجابة الصحيحة:</p>
+                </div>
+
+                <div id="options-container" class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 mb-4"></div>
+
+                <div id="feedback-box" class="hidden p-3 rounded-xl text-sm font-semibold text-center mb-3 transition-all duration-300"></div>
+
+                <button id="next-btn" onclick="playSound('click'); nextQuestion()" class="hidden w-full bg-blue-950 hover:bg-blue-900 text-yellow-400 font-black py-3 px-6 rounded-xl shadow-lg transition-all duration-300 flex items-center justify-center gap-2 border-2 border-yellow-400">
+                    <span>السؤال التالي</span>
+                    <i class="fa-solid fa-arrow-left"></i>
+                </button>
+            </div>
+
+            <div id="game-over-screen" class="hidden text-center py-3">
+                <div id="result-icon-bg" class="w-20 h-20 rounded-full mx-auto flex items-center justify-center text-4xl mb-3 shadow-xl bg-yellow-400 border-2 border-yellow-500 text-blue-950 animate-pulse-slow">
+                    <i id="result-icon" class="fa-solid fa-trophy"></i>
+                </div>
+                <h2 id="result-title" class="text-2xl sm:text-3xl font-black mb-2 text-blue-950">تهانينا! حققت الإنجاز</h2>
+                <p id="result-desc" class="text-slate-600 text-sm sm:text-base mb-4 font-semibold">لقد نجحت في اجتياز كافة الأسئلة بنجاح تام.</p>
+                
+                <div class="bg-blue-50 p-3.5 rounded-2xl border-2 border-blue-200 mb-4 flex justify-around">
+                    <div>
+                        <div class="text-xs text-slate-500 font-bold">الوقت المستغرق</div>
+                        <div id="final-time" class="text-base sm:text-lg font-black text-blue-950 font-mono">٠٠:٠٠</div>
+                    </div>
+                    <div class="border-r border-blue-200"></div>
+                    <div>
+                        <div class="text-xs text-slate-500 font-bold">النتيجة النهائية</div>
+                        <div id="final-score" class="text-base sm:text-lg font-black text-emerald-600">٥ / ٥</div>
+                    </div>
+                </div>
+
+                <div class="flex flex-col sm:flex-row gap-3">
+                    <button onclick="playSound('click'); restartCurrentGame()" class="flex-1 bg-blue-950 hover:bg-blue-900 text-yellow-400 font-black py-3 px-4 rounded-xl shadow-lg transition-all duration-300 flex items-center justify-center gap-2 border-2 border-yellow-400">
+                        <i class="fa-solid fa-rotate-right"></i>
+                        <span>إعادة اللعب</span>
+                    </button>
+                    <button onclick="playSound('click'); backToHome()" class="bg-yellow-400 hover:bg-yellow-500 text-blue-950 font-black py-3 px-4 rounded-xl border-2 border-yellow-500 transition-all duration-300 flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-house"></i>
+                        <span>القائمة الرئيسية</span>
+                    </button>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
     <script>
-        function toArabicNumerals(num) {
-            const arabicNumbers = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
-            return num.toString().replace(/\d/g, (digit) => arabicNumbers[digit]);
+        let audioCtx = null;
+        function getAudioContext() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+            return audioCtx;
         }
-
-        const periodData = {
-            "1234567890": { name: "محمد احمد سالم", score: 19, total: 20 },
-            "1234567899": { name: "يوسف علي باشا", score: 13, total: 20 },
-            "1234567891": { name: "ناصر ماجد علي", score: 9, total: 20 },
-            "1155309303": { name: "أصيل حسن علي عواجي", score: 3, total: 20 },
-            "11729": { name: "بندر عزالدين موسى ابا", score: 12, total: 20 },
-            "1154414203": { name: "تركي هاني ابن حسن تازي", score: 6, total: 20 },
-            "1170180994": { name: "ثامر غزاى غويزي الروقي", score: 6, total: 20 },
-            "1159087673": { name: "جميل فيصل رياض السليماني", score: 15, total: 20 },
-            "1154716904": { name: "حسام حمزه عبدالرحمن بخاري", score: 5, total: 20 },
-            "1158040699": { name: "سالم ثامر سالم الشمري", score: 16, total: 20 },
-            "1158471290": { name: "سعود ناصر سعود المنيعي", score: 11, total: 20 },
-            "2334854706": { name: "عادل احمد عادل الحجه", score: 16, total: 20 },
-            "160206266": { name: "عبدالحكيم احمد محمد حنتوش", score: 16, total: 20 },
-            "2315324513": { name: "عبدالرحمن محمد محمد بهجت المنلا", score: 15, total: 20 },
-            "4130996293": { name: "عبدالعزيز سالم محمد النهدي", score: 20, total: 20 },
-            "2320106921": { name: "عبدالعزيز شائف شرف علي", score: 18, total: 20 },
-            "2325689673": { name: "عبدالعزيز عمر احمد قواص", score: 10, total: 20 },
-            "1159476728": { name: "عبدالله احمد عطية الله النعماني", score: 10, total: 20 },
-            "1157123553": { name: "عبدالله سليمان عبدالله الحربي", score: 0, total: 20 },
-            "2322087509": { name: "عـبدالله غازي عبدالله اليافعي", score: 10, total: 20 },
-            "1157066638": { name: "عبدالملك نايف عايض الدوسري", score: 6, total: 20 },
-            "2370510261": { name: "عبدالولي محمد بليي عبدي", score: 16, total: 20 },
-            "2305556959": { name: "علي عمر احمد بن يهب", score: 15, total: 20 },
-            "1156295030": { name: "علي معيلي جدوع الحربي", score: 10, total: 20 },
-            "1158212785": { name: "عمار حسن بن عطيةالله الصحفي", score: 5, total: 20 },
-            "2340798830": { name: "عمر رائد احمد الجمالي", score: 5, total: 20 },
-            "1159259371": { name: "فهد مشعل فهد الشمري", score: 10, total: 20 },
-            "1157392653": { name: "فيصل بندر بن عبدالغني الحربي", score: 20, total: 20 },
-            "1164217604": { name: "فيصل عبدالله سعد القثامي", score: 11, total: 20 },
-            "1153983687": { name: "فيصل عبدالله صديق زيد", score: 16, total: 20 },
-            "1158049237": { name: "قصي اشرف ابوبكر عثمان", score: 7, total: 20 },
-            "1182619500": { name: "ماجد محمد عبدالله الشمراني", score: 7, total: 20 },
-            "1157860675": { name: "مالك عمر عوض الحربي", score: 20, total: 20 },
-            "1155631458": { name: "محمد علي حسن الشهري", score: 8, total: 20 },
-            "1157846484": { name: "محمد غيث رحاب النعماني", score: 20, total: 20 },
-            "1158457349": { name: "محمد فهد علي الغامدي", score: 20, total: 20 },
-            "1154894610": { name: "نواف سلطان سعيد الجحدلي", score: 10, total: 20 },
-            "1153553589": { name: "وليد نواف ملفى الحربي", score: 16, total: 20 }
-        };
-
-        const teamsData = {
-            "1234567890": { name: "محمد احمد سالم", score: 9, total: 10 },
-            "1234567899": { name: "يوسف علي باشا", score: 7, total: 10 },
-            "1234567891": { name: "ناصر ماجد علي", score: 4, total: 10 },
-            "1041722077": { name: "يوسف محمد المولد", score: 9, total: 10 },
-            "1041712077": { name: "محمد يوسف", score: 8.5, total: 10 },
-            "1041712022": { name: "خالد علي", score: 9.5, total: 10 },
-            "1041712033": { name: "فارس السلمي", score: 10, total: 10 }
-        };
 
         function playSound(type) {
-            const AudioContext = window.AudioContext || window.webkitAudioContext;
-            if (!AudioContext) return;
-            const ctx = new AudioContext();
-
-            if (type === 'applause') {
-                for (let i = 0; i < 15; i++) {
-                    setTimeout(() => {
-                        const bufferSize = ctx.sampleRate * 0.08;
-                        const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
-                        const data = buffer.getChannelData(0);
-                        for (let j = 0; j < bufferSize; j++) {
-                            data[j] = Math.random() * 2 - 1;
-                        }
-                        const noise = ctx.createBufferSource();
-                        noise.buffer = buffer;
-                        const filter = ctx.createBiquadFilter();
-                        filter.type = 'bandpass';
-                        filter.frequency.value = 1000;
-                        const gain = ctx.createGain();
-                        gain.gain.setValueAtTime(0.3, ctx.currentTime);
-                        gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.08);
-                        noise.connect(filter);
-                        filter.connect(gain);
-                        gain.connect(ctx.destination);
-                        noise.start();
-                    }, i * 60);
-                }
-            } else if (type === 'success') {
-                const notes = [523.25, 659.25, 783.99, 1046.50];
-                notes.forEach((freq, index) => {
-                    const osc = ctx.createOscillator();
-                    const gain = ctx.createGain();
-                    osc.type = 'triangle';
-                    osc.frequency.value = freq;
-                    gain.gain.setValueAtTime(0.15, ctx.currentTime + index * 0.12);
-                    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + index * 0.12 + 0.3);
-                    osc.connect(gain);
-                    gain.connect(ctx.destination);
-                    osc.start(ctx.currentTime + index * 0.12);
-                    osc.stop(ctx.currentTime + index * 0.12 + 0.3);
-                });
-            } else if (type === 'encouraging') {
+            try {
+                const ctx = getAudioContext();
                 const osc = ctx.createOscillator();
                 const gain = ctx.createGain();
-                osc.type = 'sine';
-                osc.frequency.setValueAtTime(350, ctx.currentTime);
-                osc.frequency.exponentialRampToValueAtTime(450, ctx.currentTime + 0.4);
-                gain.gain.setValueAtTime(0.2, ctx.currentTime);
-                gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.5);
                 osc.connect(gain);
                 gain.connect(ctx.destination);
-                osc.start();
-                osc.stop(ctx.currentTime + 0.5);
+                const now = ctx.currentTime;
+
+                if (type === 'click') {
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(400, now);
+                    osc.frequency.exponentialRampToValueAtTime(800, now + 0.08);
+                    gain.gain.setValueAtTime(0.1, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.08);
+                    osc.start(now);
+                    osc.stop(now + 0.08);
+                } else if (type === 'correct') {
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(523.25, now);
+                    osc.frequency.setValueAtTime(659.25, now + 0.1);
+                    osc.frequency.setValueAtTime(783.99, now + 0.2);
+                    gain.gain.setValueAtTime(0.15, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.35);
+                    osc.start(now);
+                    osc.stop(now + 0.35);
+                } else if (type === 'wrong') {
+                    osc.type = 'sawtooth';
+                    osc.frequency.setValueAtTime(200, now);
+                    osc.frequency.setValueAtTime(140, now + 0.15);
+                    gain.gain.setValueAtTime(0.15, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.3);
+                    osc.start(now);
+                    osc.stop(now + 0.3);
+                } else if (type === 'win') {
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(440, now);
+                    osc.frequency.setValueAtTime(554.37, now + 0.15);
+                    osc.frequency.setValueAtTime(659.25, now + 0.3);
+                    osc.frequency.setValueAtTime(880, now + 0.45);
+                    gain.gain.setValueAtTime(0.2, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.7);
+                    osc.start(now);
+                    osc.stop(now + 0.7);
+                }
+            } catch (e) {
+                console.log('Audio error:', e);
             }
         }
 
-        function getFeedback(score, total) {
-            const percentage = (score / total) * 100;
-            let feedback = {};
-
-            if (percentage >= 85) {
-                feedback.class = "excellent";
-                feedback.title = "ممتاز! 🌟";
-                feedback.message = "أبدعت وتألقت يا بطل! أداء استثنائي ينم عن فهم عميق لمادة الرياضيات. واصل هذا التميز والتألق فالقمة بانتظارك دائماً! 👏✨";
-                feedback.sound = "applause";
-            } else if (percentage >= 60) {
-                feedback.class = "good";
-                feedback.title = "أحسنت! 👍";
-                feedback.message = "أتوقع أنك تحقق درجة أحسن في الاختبارات القادمة! واصل الاجتهاد والتركيز وستصل إلى ما تحلم به. 💪🚀";
-                feedback.sound = "success";
-            } else {
-                feedback.class = "encouraging";
-                feedback.title = "خطوة نحو النجاح! 💡";
-                feedback.message = "لا تقلق يا بطل، البدايات دائمًا تكون فرصة للتعلم والتطور. أنت تمتلك القدرة على التحسن، ومع قليل من المتابعة والتدريب ستتألق في المرات القادمة! 🌟🌱";
-                feedback.sound = "encouraging";
-            }
-            return feedback;
+        function renderSci(numStr, expStr) {
+            return `<span class="sci-notation"><span class="sci-num">${numStr}</span><span class="sci-times">×</span><span class="sci-ten-wrapper"><span class="sci-ten-exp">${expStr}</span><span class="sci-ten-base">١٠</span></span></span>`;
         }
 
-        function switchTab(tabName) {
-            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-            document.querySelectorAll('.section-form').forEach(sec => sec.classList.remove('active'));
-            document.getElementById('resultContainer').style.display = 'none';
+        function renderRad(contentStr) {
+            return `<span class="math-radical"><span class="radical-content">${toArabicDigits(contentStr)}</span><span class="radical-symbol">√</span></span>`;
+        }
 
-            if (tabName === 'period') {
-                document.querySelector('.period-tab').classList.add('active');
-                document.getElementById('periodSection').classList.add('active');
+        function toArabicDigits(num) {
+            const arabicNumbers = ['٠', '١', '٢', '٣', '٤', '٥', '٦', '٧', '٨', '٩'];
+            return String(num).replace(/[0-9]/g, w => arabicNumbers[+w]);
+        }
+
+        function generateMultQuestions(tableNum) {
+            const questions = [];
+            const multipliers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+            const shuffled = [...multipliers].sort(() => Math.random() - 0.5).slice(0, 5);
+
+            shuffled.forEach(m => {
+                let a = (tableNum === 'all') ? Math.floor(Math.random() * 10) + 1 : tableNum;
+                let b = m;
+                let correctAns = a * b;
+
+                let optionsSet = new Set([toArabicDigits(correctAns)]);
+                while (optionsSet.size < 4) {
+                    let offset = (Math.random() > 0.5 ? 1 : -1) * (Math.floor(Math.random() * 3) + 1);
+                    let wrongVal = Math.max(1, correctAns + offset);
+                    optionsSet.add(toArabicDigits(wrongVal));
+                }
+
+                let optionsArr = Array.from(optionsSet).sort(() => Math.random() - 0.5);
+                let correctIdx = optionsArr.indexOf(toArabicDigits(correctAns));
+
+                let titleText = (tableNum === 'all') ? `ما حاصل ضرب: ${toArabicDigits(a)} × ${toArabicDigits(b)} ؟` : `ما حاصل ضرب جدول (${toArabicDigits(tableNum)}): ${toArabicDigits(a)} × ${toArabicDigits(b)} ؟`;
+
+                questions.push({
+                    text: titleText,
+                    options: optionsArr,
+                    correct: correctIdx,
+                    explanation: `لأن ${a} × ${b} = ${correctAns}.`
+                });
+            });
+
+            return questions;
+        }
+
+        const gamesData = {
+            'powers': {
+                title: 'القوى والأسس',
+                subtitle: 'أجب عن الأسئلة لحساب القوى والأسس وشحن مولد الطاقة الأسية',
+                badge: '<i class="fa-solid fa-bolt"></i> لعبة مولد الطاقة الأسية',
+                type: 'power',
+                totalQuestions: 4,
+                questions: [
+                    {
+                        text: 'ما قيمة العبارة الأسية: <span class="math-pow"><span class="math-base">٣</span><span class="math-exp">٤</span></span> ؟',
+                        options: ['١٢', '٢٧', '٨١', '٢٤٣'],
+                        correct: 2,
+                        explanation: 'لأن 3 × 3 × 3 × 3 = 81.'
+                    },
+                    {
+                        text: 'اكتب الضرب المتكرر (٥ × ٥ × ٥) بالصيغة الأسية:',
+                        options: ['<span class="math-pow"><span class="math-base">٥</span><span class="math-exp">٣</span></span>', '<span class="math-pow"><span class="math-base">٣</span><span class="math-exp">٥</span></span>', '١٥', '١٢٥'],
+                        correct: 0,
+                        explanation: 'الأساس هو 5 ويتكرر ضربه 3 مرات، إذن بالصيغة الأسية هو 5 أس 3.'
+                    },
+                    {
+                        text: 'ما قيمة أي عدد غير الصفر مرفوعاً للقوة صفر (مثال: <span class="math-pow"><span class="math-base">٧</span><span class="math-exp">٠</span></span>)؟',
+                        options: ['صفر', 'واحد (١)', 'العدد نفسه', 'سبعة'],
+                        correct: 1,
+                        explanation: 'أي عدد غير الصفر مرفوع للقوة صفر يساوي دائماً 1.'
+                    },
+                    {
+                        text: 'أوجد قيمة: <span class="math-pow"><span class="math-base">٢-</span><span class="math-exp">٣</span></span> (سالب ٢ أس ٣):',
+                        options: ['٦-', '٦', '٨-', '٨'],
+                        correct: 2,
+                        explanation: 'لأن (2-) × (2-) × (2-) = 8-.'
+                    }
+                ]
+            },
+            'scientific-radar': {
+                title: 'تحدي رادار الصيغة العلمية',
+                subtitle: '٥ أسئلة متنوعة لاختبار مهارات التحويل بين الصيغة القياسية والعلمية ذهاباً وإياباً',
+                badge: '<i class="fa-solid fa-radar"></i> لعبة تحدي رادار الصيغة العلمية',
+                type: 'radar',
+                totalQuestions: 5,
+                questions: [
+                    {
+                        text: 'ما الصيغة القياسية للعدد المكتوب بالصيغة العلمية: ' + renderSci('٧,٢', '٤') + ' ؟',
+                        options: ['٧٢٠٠', '٧٢٠٠٠', '٧٢٠٠٠٠', '٧,٢٠٠'],
+                        correct: 1,
+                        explanation: 'نحرك الفاصلة 4 منازل لليمين ليصبح العدد 72000.'
+                    },
+                    {
+                        text: 'اكتب العدد ٥٦٠٠٠٠ بالصيغة العلمية الصحيحة:',
+                        options: [renderSci('٥,٦', '٤'), renderSci('٥,٦', '٥'), renderSci('٥٦', '٤'), renderSci('٥,٦', '٦')],
+                        correct: 1,
+                        explanation: 'نضع الفاصلة بعد أول رقم غير صَفري (5.6) ونحركها 5 منازل لليسار، ليصبح الأُس موجب 5.'
+                    },
+                    {
+                        text: 'ما الصيغة القياسية للعدد المكتوب بالصيغة العلمية: ' + renderSci('٣,٢', '٢-') + ' ؟',
+                        options: ['٣٢٠', '٠,٠٣٢', '٠,٣٢', '٠,٠٠٣٢'],
+                        correct: 1,
+                        explanation: 'الأس السالب (أس 2-) يعني تحريك الفاصلة منزلتين لليسار ليصبح 0.032.'
+                    },
+                    {
+                        text: 'العدد ٠,٠٠٠٧ يكتب بالصيغة العلمية بالشكل:',
+                        options: [renderSci('٧', '٣-'), renderSci('٧', '٤-'), renderSci('٧', '٤'), renderSci('٧,٠', '٥-')],
+                        correct: 1,
+                        explanation: 'نحرك الفاصلة 4 منازل لليمين للحصول على 7، وبما أن العدد أقل من الواحد فالأُس يكون سالب 4.'
+                    },
+                    {
+                        text: 'أي من الأعداد الآتية يمثل الصيغة العلمية الصحيحة للعدد ٨١٠٠٠٠٠ ؟',
+                        options: [renderSci('٨,١', '٥'), renderSci('٨,١', '٦'), renderSci('٨,١', '٧'), renderSci('٨١', '٥')],
+                        correct: 1,
+                        explanation: 'العدد يبدأ بـ 8.1 وتحركت الفاصلة 6 منازل لليسار، إذن الصيغة العلمية هي 8.1 × 10 أس 6.'
+                    }
+                ]
+            },
+            'roots': {
+                title: 'تقدير الجذور التربيعية',
+                subtitle: 'أجب عن الأسئلة لتقدير الجذور التربيعية وفتح الخزنة الرقمية',
+                badge: '<i class="fa-solid fa-square-root-variable"></i> تحدي الخزنة السرية',
+                type: 'vault',
+                totalQuestions: 4,
+                questions: [
+                    {
+                        text: 'قدر الجذر التربيعي للعدد ' + renderRad(47) + ' لأقرب عدد كلي:<br>' +
+                              '<div class="my-3 p-3 bg-white rounded-xl border border-yellow-300 flex justify-center items-center">' +
+                              '<svg width="140" height="100" viewBox="0 0 140 100">' +
+                              '<rect x="20" y="10" width="100" height="80" rx="8" fill="#FEF9C3" stroke="#CA8A04" stroke-width="2"/>' +
+                              '<text x="70" y="55" font-size="16" font-weight="bold" fill="#1E3A8A" text-anchor="middle">مساحة = ٤٧ سم²</text>' +
+                              '</svg></div>',
+                        options: ['٦', '٧', '٨', '٩'],
+                        correct: 1,
+                        vaultDigit: '٧',
+                        explanation: 'لأن ٤٧ يقع بين المربعين الكاملين ٣٦ و ٤٩، والجذر الأقرب هو ٧.'
+                    },
+                    {
+                        text: 'قدر الجذر التربيعي للعدد ' + renderRad(85) + ' لأقرب عدد كلي:',
+                        options: ['٨', '٩', '١٠', '١١'],
+                        correct: 1,
+                        vaultDigit: '٩',
+                        explanation: 'لأن ٨٥ قريب جداً من المربع الكامل ٨١، وجذره التربيعي هو ٩.'
+                    },
+                    {
+                        text: 'ما القيمة التقديرية للعدد ' + renderRad(19) + ' لأقرب عدد كلي؟',
+                        options: ['٣', '٤', '٥', '٦'],
+                        correct: 1,
+                        vaultDigit: '٤',
+                        explanation: 'لأن ١٩ يقع بين ١٦ و ٢٥، وهو أقرب إلى ١٦ وجذره ٤.'
+                    },
+                    {
+                        text: 'قدر الجذر التربيعي للعدد ' + renderRad(120) + ' لأقرب عدد كلي:',
+                        options: ['٩', '١٠', '١١', '١٢'],
+                        correct: 2,
+                        vaultDigit: '١',
+                        explanation: 'لأن ١٢٠ قريب جداً من ١٢١، وجذره التربيعي هو ١١.'
+                    }
+                ]
+            },
+            'real-numbers': {
+                title: 'مجموعة الأعداد الحقيقية',
+                subtitle: 'صنف الأعداد واكتشف الشفرة السرية لفتح الخزنة',
+                badge: '<i class="fa-solid fa-atom"></i> تصنيف الأعداد الحقيقية',
+                type: 'vault',
+                totalQuestions: 4,
+                questions: [
+                    {
+                        text: 'أي من الأعداد الآتية يعد عدداً غير نسبياً؟',
+                        options: ['<span class="math-frac"><span class="math-frac-num">٢٢</span><span class="math-frac-den">٧</span></span>', renderRad(25), '٣,١٤١٥٩...', '<span class="repeating-decimal">٠,٣<span class="repeating-bar">٣</span></span>'],
+                        correct: 2,
+                        vaultDigit: '٣',
+                        explanation: 'الأعداد غير النسبية هي كسور عشرية غير منتهية وغير دورية مثل الجذور الصماء وعدد طي (π).'
+                    },
+                    {
+                        text: 'العدد ' + renderRad(16) + ' ينتمي إلى أي من المجموعات التالية كأصغر مجموعة؟',
+                        options: ['الأعداد غير النسبية', 'الأعداد الطبيعية (ط)', 'الأعداد النسبية فقط', 'الأعداد غير الصحيحة'],
+                        correct: 1,
+                        vaultDigit: '٥',
+                        explanation: 'لأن جذر ١٦ يساوي ٤، وهو عدد طبيعي وكل وصحيح ونسبي وحقيقي، وأصغر مجموعة هي الأعداد الطبيعية.'
+                    },
+                    {
+                        text: 'أي الأعداد الآتية يمثل عدداً نسبياً؟',
+                        options: [renderRad(12), renderRad(50), '<span class="repeating-decimal">٠,٢<span class="repeating-bar">٥</span></span>', 'ط (π)'],
+                        correct: 2,
+                        vaultDigit: '٨',
+                        explanation: 'الكسر العشري الدوري هو عدد نسبي لأنه يمكن كتابته على صورة أسر بسط ومقام (أ/ب).'
+                    },
+                    {
+                        text: 'كل عدد طبيعي هو بالضرورة عدد:',
+                        options: ['غير نسبي', 'غير حقيقي', 'كلي', 'سالب'],
+                        correct: 2,
+                        vaultDigit: '٢',
+                        explanation: 'مجموعة الأعداد الكلية تضم الأعداد الطبيعية مضافاً إليها الصفر.'
+                    }
+                ]
+            },
+            'multiply-rationals': {
+                title: 'ضرب الأعداد النسبية',
+                subtitle: 'أجب عن أسئلة ضرب الكسور لملء وقود الصاروخ وإطلاقه نحو الفضاء',
+                badge: '<i class="fa-solid fa-rocket"></i> رحلة الصاروخ الفضائي',
+                type: 'rocket',
+                totalQuestions: 4,
+                questions: [
+                    {
+                        text: 'أوجد ناتج الضرب في أبسط صورة: <span class="math-frac"><span class="math-frac-num">٢-</span><span class="math-frac-den">٣</span></span> × <span class="math-frac"><span class="math-frac-num">٣</span><span class="math-frac-den">٤</span></span>',
+                        options: ['<span class="math-frac"><span class="math-frac-num">١-</span><span class="math-frac-den">٢</span></span>', '<span class="math-frac"><span class="math-frac-num">١</span><span class="math-frac-den">١٢</span></span>', '<span class="math-frac"><span class="math-frac-num">٦-</span><span class="math-frac-den">٧</span></span>', '<span class="math-frac"><span class="math-frac-num">٦</span><span class="math-frac-den">١٢</span></span>'],
+                        correct: 0,
+                        explanation: 'عند الضرب نضرب البسطين (2- × 3 = 6-) والمقامين (3 × 4 = 12)، ثم تبسيط الكسر (6-/12 = 1-/2).'
+                    },
+                    {
+                        text: 'ما ناتج ضرب: (<span class="math-frac"><span class="math-frac-num">٤-</span><span class="math-frac-den">٥</span></span>) × (<span class="math-frac"><span class="math-frac-num">٣-</span><span class="math-frac-den">٨</span></span>) ؟',
+                        options: ['<span class="math-frac"><span class="math-frac-num">١٢-</span><span class="math-frac-den">٤٠</span></span>', '<span class="math-frac"><span class="math-frac-num">٣</span><span class="math-frac-den">١٠</span></span>', '<span class="math-frac"><span class="math-frac-num">٣-</span><span class="math-frac-den">١٠</span></span>', '<span class="math-frac"><span class="math-frac-num">٣٢</span><span class="math-frac-den">١٥</span></span>'],
+                        correct: 1,
+                        explanation: 'سالب × سالب = موجب. (4×3)/(5×8) = 12/40 وبعد تبسيطها بالقسمة على 4 تصبح 3/10.'
+                    },
+                    {
+                        text: 'أوجد ناتج ضرب العددين الكسريين: <span class="math-frac"><span class="math-frac-num">٣</span><span class="math-frac-den">٢-</span></span> × <span class="math-frac"><span class="math-frac-num">٤</span><span class="math-frac-den">٣</span></span>',
+                        options: ['٢-', '٢', '١-', '<span class="math-frac"><span class="math-frac-num">٣</span><span class="math-frac-den">٢</span></span>'],
+                        correct: 0,
+                        explanation: 'عند ضرب كسر سالب في موجب يكون الناتج سالباً (-3/2 × 4/3 = -2).'
+                    },
+                    {
+                        text: 'إذا ضربنا أي عدد نسبي في نظيره الضربي (المقلوب)، فماذا يكون الناتج دائماً؟',
+                        options: ['صفر', 'واحد (١)', '١-', 'العدد نفسه'],
+                        correct: 1,
+                        explanation: 'حاصل ضرب أي عدد نسبي في مقلوبه (نظيره الضربي) يساوي دائماً 1.'
+                    }
+                ]
+            },
+            'add-rationals': {
+                title: 'جمع الأعداد النسبية',
+                subtitle: 'أجب لتسجيل الأهداف في شباك الخصم عبر تحدي ضربات الجزاء',
+                badge: '<i class="fa-solid fa-futbol"></i> بطولة ضربات الجزاء الرياضية',
+                type: 'football',
+                totalQuestions: 4,
+                questions: [
+                    {
+                        text: 'أوجد ناتج الجمع للكسرين ذوي المقامين الموحدين: <span class="math-frac"><span class="math-frac-num">٣</span><span class="math-frac-den">٧</span></span> + <span class="math-frac"><span class="math-frac-num">٥-</span><span class="math-frac-den">٧</span></span>',
+                        options: ['<span class="math-frac"><span class="math-frac-num">٨</span><span class="math-frac-den">٧</span></span>', '<span class="math-frac"><span class="math-frac-num">٢-</span><span class="math-frac-den">٧</span></span>', '<span class="math-frac"><span class="math-frac-num">٢</span><span class="math-frac-den">٧</span></span>', '<span class="math-frac"><span class="math-frac-num">٨-</span><span class="math-frac-den">٧</span></span>'],
+                        correct: 1,
+                        explanation: 'المقامات موحدة (7)، ونجمع البسطين: 3 + (5-) = 2-، ليصبح الناتج 2-/7.'
+                    },
+                    {
+                        text: 'ما ناتج جمع: <span class="math-frac"><span class="math-frac-num">١</span><span class="math-frac-den">٤</span></span> + <span class="math-frac"><span class="math-frac-num">١-</span><span class="math-frac-den">٢</span></span> بعد توحيد المقامات؟',
+                        options: ['<span class="math-frac"><span class="math-frac-num">١-</span><span class="math-frac-den">٤</span></span>', '<span class="math-frac"><span class="math-frac-num">٣</span><span class="math-frac-den">٤</span></span>', '<span class="math-frac"><span class="math-frac-num">١</span><span class="math-frac-den">٤</span></span>', '<span class="math-frac"><span class="math-frac-num">١-</span><span class="math-frac-den">٣</span></span>'],
+                        correct: 0,
+                        explanation: 'نوحد المقام إلى 4 بضرب كسر (-1/2) في 2 ليصبح (-2/4)، ثم نجمع: 1/4 + (-2/4) = -1/4.'
+                    },
+                    {
+                        text: 'أوجد ناتج طرح: <span class="math-frac"><span class="math-frac-num">٥</span><span class="math-frac-den">٨</span></span> - <span class="math-frac"><span class="math-frac-num">٣-</span><span class="math-frac-den">٨</span></span> في أبسط صورة:',
+                        options: ['<span class="math-frac"><span class="math-frac-num">١</span><span class="math-frac-den">٤</span></span>', '١', '<span class="math-frac"><span class="math-frac-num">١</span><span class="math-frac-den">٢</span></span>', '<span class="math-frac"><span class="math-frac-num">١</span><span class="math-frac-den">٨</span></span>'],
+                        correct: 1,
+                        explanation: 'طرح السالب يعادل الجمع: 5/8 - (-3/8) = (5 + 3)/8 = 8/8 = 1.'
+                    },
+                    {
+                        text: 'ما طريقتنا لإيجاد المعكوس الجمعي للعدد <span class="math-frac"><span class="math-frac-num">٣-</span><span class="math-frac-den">٥</span></span> ؟',
+                        options: ['تغيير إشارته ليصبح موجباً', 'قلب الكسر', 'ضربه في نفسه', 'تغيير المقام فقط'],
+                        correct: 0,
+                        explanation: 'المعكوس الجمعي يعني تغيير الإشارة، فمعكوس (-3/5) هو (+3/5).'
+                    }
+                ]
+            },
+            'pythagoras': {
+                title: 'نظرية فيثاغورس ومختبر الهندسة',
+                subtitle: 'أجب عن أسئلة حساب الأطوال في المثلث قائم الزاوية لتشغيل معمل فيثاغورس',
+                badge: '<i class="fa-solid fa-shapes"></i> مختبر نظرية فيثاغورس',
+                type: 'pythagoras',
+                totalQuestions: 4,
+                questions: [
+                    {
+                        text: 'في مثلث قائم الزاوية أدناه، إذا كان طولا ساقيه <b>٣ سم</b> و <b>٤ سم</b>، فما طول الوتر (جـ) ؟<br>' +
+                              '<div class="my-3 p-3 bg-white rounded-xl border border-indigo-200 flex justify-center items-center">' +
+                              '<svg width="180" height="130" viewBox="0 0 180 130">' +
+                              '<!-- Triangle -->' +
+                              '<polygon points="30,110 30,20 150,110" fill="#EEF2FF" stroke="#312E81" stroke-width="3"/>' +
+                              '<!-- Right Angle Box -->' +
+                              '<rect x="30" y="94" width="16" height="16" fill="none" stroke="#312E81" stroke-width="2"/>' +
+                              '<!-- Labels -->' +
+                              '<text x="10" y="70" font-size="14" font-weight="bold" fill="#1E3A8A">أ = ٣</text>' +
+                              '<text x="90" y="125" font-size="14" font-weight="bold" fill="#1E3A8A">ب = ٤</text>' +
+                              '<text x="95" y="60" font-size="14" font-weight="bold" fill="#DC2626">جـ = ؟</text>' +
+                              '</svg></div>',
+                        options: ['٥ سم', '٧ سم', '١٢ سم', '٢٥ سم'],
+                        correct: 0,
+                        explanation: 'حسب نظرية فيثاغورس: جـ² = أ² + ب² = ٣² + ٤² = ٩ + ١٦ = ٢٥، وبأخذ الجذر التربيعي لـ ٢٥ يصبح الوتر = ٥ سم.'
+                    },
+                    {
+                        text: 'في مثلث قائم الزاوية، إذا كان طول الوتر <b>١٠ سم</b> وطول أحد ساقيه <b>٦ سم</b>، فما طول الساق الأخرى؟<br>' +
+                              '<div class="my-3 p-3 bg-white rounded-xl border border-indigo-200 flex justify-center items-center">' +
+                              '<svg width="180" height="130" viewBox="0 0 180 130">' +
+                              '<polygon points="30,110 30,20 150,110" fill="#EEF2FF" stroke="#312E81" stroke-width="3"/>' +
+                              '<rect x="30" y="94" width="16" height="16" fill="none" stroke="#312E81" stroke-width="2"/>' +
+                              '<text x="10" y="70" font-size="14" font-weight="bold" fill="#1E3A8A">أ = ٦</text>' +
+                              '<text x="90" y="125" font-size="14" font-weight="bold" fill="#1E3A8A">س = ؟</text>' +
+                              '<text x="95" y="60" font-size="14" font-weight="bold" fill="#DC2626">الوتر = ١٠</text>' +
+                              '</svg></div>',
+                        options: ['٤ سم', '٨ سم', '١٦ سم', '٦٤ سم'],
+                        correct: 1,
+                        explanation: 'بإعادة ترتيب نظرية فيثاغورس (ب² = جـ² - أ²): ١٠² - ٦² = ١٠٠ - ٣٦ = ٦٤، وجذر ٦٤ هو ٨ سم.'
+                    },
+                    {
+                        text: 'أي من الأطوال الآتية لأضلاع مثلث تمثل <b>ثلاثية فيثاغورس</b> الصحيحة؟',
+                        options: ['٢، ٣، ٤', '٥، ١٢، ١٣', '١، ٢، ٣', '٤، ٥، ٦'],
+                        correct: 1,
+                        explanation: 'لأن ٥² + ١٢² = ٢٥ + ١٤٤ = ١٦٩، وجذر ١٦٩ هو ١٣ (وهي أطوال تحقق نظرية فيثاغورس تماماً).'
+                    },
+                    {
+                        text: 'إذا كانت أطوال أضلاع مثلث هي <b>٦ سم، ٨ سم، ١٠ سم</b>، فهل يمثل هذا المثلث مثلثاً قائم الزاوية؟',
+                        options: ['لا، لأنه مثلث حاد الزوايا', 'نعم، لأن ٦² + ٨² = ١٠²', 'لا، لأن الأطوال غير متساوية', 'نعم، لأن جميع أضلاعه زوجية'],
+                        correct: 1,
+                        explanation: 'نعم؛ لأن ٣٦ + ٦٤ = ١٠٠، وهي تحقق عكس نظرية فيثاغورس إذن المثلث قائم الزاوية.'
+                    }
+                ]
+            }
+        };
+
+        let currentGameKey = '';
+        let currentMultTable = 'all';
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let timerSeconds = 180;
+        let timerInterval = null;
+        let startTime = 0;
+        let answeredCurrent = false;
+
+        function openMultTableSelector() {
+            document.getElementById('home-screen').classList.add('hidden');
+            document.getElementById('mult-selector-screen').classList.remove('hidden');
+        }
+
+        function startMultTableGame(tableNum) {
+            currentMultTable = tableNum;
+            document.getElementById('mult-selector-screen').classList.add('hidden');
+            
+            let titleStr = (tableNum === 'all') ? 'حفظ جدول الضرب الشامل (من ١ إلى ١٠)' : `حفظ جدول الضرب (الجدول رقم ${toArabicDigits(tableNum)})`;
+            let subtitleStr = (tableNum === 'all') ? 'أسئلة عشوائية من جميع جداول الضرب من ١ إلى ١٠' : `أسئلة مركزة على جدول ضرب العدد ${toArabicDigits(tableNum)}`;
+
+            gamesData['multiplication-table'] = {
+                title: titleStr,
+                subtitle: subtitleStr,
+                badge: `<i class="fa-solid fa-graduation-cap"></i> تحدي جدول الضرب (${tableNum === 'all' ? 'شامل' : 'الجدول ' + toArabicDigits(tableNum)})`,
+                type: 'mult',
+                totalQuestions: 5,
+                questions: generateMultQuestions(tableNum)
+            };
+
+            startGame('multiplication-table');
+        }
+
+        function startGame(gameKey) {
+            currentGameKey = gameKey;
+            currentQuestionIndex = 0;
+            score = 0;
+            timerSeconds = 180;
+            startTime = Date.now();
+            answeredCurrent = false;
+
+            const game = gamesData[gameKey];
+
+            document.getElementById('home-screen').classList.add('hidden');
+            document.getElementById('mult-selector-screen').classList.add('hidden');
+            document.getElementById('game-container').classList.remove('hidden');
+            document.getElementById('game-title').innerText = game.title;
+            document.getElementById('game-subtitle').innerText = game.subtitle;
+            document.getElementById('game-badge').innerHTML = game.badge;
+
+            const vaultPanel = document.getElementById('vault-status-panel');
+            const vaultDigits = document.getElementById('vault-digits-panel');
+            const multPanel = document.getElementById('mult-status-panel');
+            const powerPanel = document.getElementById('power-status-panel');
+            const radarPanel = document.getElementById('radar-status-panel');
+            const rocketPanel = document.getElementById('rocket-status-panel');
+            const footballPanel = document.getElementById('football-status-panel');
+            const pythagorasPanel = document.getElementById('pythagoras-status-panel');
+
+            vaultPanel.classList.add('hidden');
+            vaultDigits.classList.add('hidden');
+            multPanel.classList.add('hidden');
+            powerPanel.classList.add('hidden');
+            radarPanel.classList.add('hidden');
+            rocketPanel.classList.add('hidden');
+            footballPanel.classList.add('hidden');
+            pythagorasPanel.classList.add('hidden');
+
+            if (game.type === 'vault') {
+                vaultPanel.style.display = 'flex';
+                vaultDigits.classList.remove('hidden');
+                document.getElementById('vault-lock-icon').className = 'fa-solid fa-lock';
+                document.getElementById('vault-status-text').innerText = 'مغلقة - بانتظار الشفرة';
+                
+                for (let i = 0; i < 4; i++) {
+                    const box = document.getElementById(`digit-box-${i}`);
+                    box.innerText = '؟';
+                    box.className = 'h-14 sm:h-16 bg-slate-100 border-2 border-yellow-500/60 rounded-2xl flex items-center justify-center text-xl sm:text-2xl font-black text-slate-400 shadow-inner';
+                }
+            } else if (game.type === 'mult') {
+                multPanel.classList.remove('hidden');
+                document.getElementById('mult-score-text').innerText = `٠ / ${toArabicDigits(game.totalQuestions)}`;
+                document.getElementById('mult-stage-text').innerText = `١ / ${toArabicDigits(game.totalQuestions)}`;
+                document.getElementById('mult-progress-bar').style.width = '0%';
+            } else if (game.type === 'power') {
+                powerPanel.classList.remove('hidden');
+                document.getElementById('power-energy-text').innerText = '٠٪';
+                document.getElementById('power-energy-bar').style.width = '0%';
+                document.getElementById('power-stage-text').innerText = `١ / ${toArabicDigits(game.totalQuestions)}`;
+            } else if (game.type === 'radar') {
+                radarPanel.classList.remove('hidden');
+                document.getElementById('radar-progress-text').innerText = '٠٪';
+                document.getElementById('radar-progress-bar').style.width = '0%';
+                document.getElementById('radar-stage-text').innerText = `١ / ${toArabicDigits(game.totalQuestions)}`;
+            } else if (game.type === 'rocket') {
+                rocketPanel.classList.remove('hidden');
+                document.getElementById('rocket-fuel-text').innerText = '٠٪';
+                document.getElementById('rocket-fuel-bar').style.width = '0%';
+                document.getElementById('rocket-stage-text').innerText = `١ / ${toArabicDigits(game.totalQuestions)}`;
+                document.getElementById('rocket-icon').style.transform = 'translateY(4px)';
+            } else if (game.type === 'football') {
+                footballPanel.classList.remove('hidden');
+                document.getElementById('football-score-text').innerText = `٠ / ${toArabicDigits(game.totalQuestions)}`;
+                document.getElementById('football-shot-text').innerText = '١';
+                document.getElementById('goal-status-msg').innerText = 'سدد الكرة بتحديد الإجابة الصحيحة!';
+                document.getElementById('ball-indicator').style.right = '32px';
+            } else if (game.type === 'pythagoras') {
+                pythagorasPanel.classList.remove('hidden');
+                document.getElementById('pythagoras-progress-text').innerText = '٠٪';
+                document.getElementById('pythagoras-progress-bar').style.width = '0%';
+                document.getElementById('pythagoras-stage-text').innerText = `١ / ${toArabicDigits(game.totalQuestions)}`;
+            }
+
+            document.getElementById('quiz-section').classList.remove('hidden');
+            document.getElementById('game-over-screen').classList.add('hidden');
+
+            startTimer();
+            loadQuestion();
+        }
+
+        function startTimer() {
+            if (timerInterval) clearInterval(timerInterval);
+            updateTimerDisplay();
+            timerInterval = setInterval(() => {
+                timerSeconds--;
+                updateTimerDisplay();
+                if (timerSeconds <= 0) {
+                    clearInterval(timerInterval);
+                    endGame(false);
+                }
+            }, 1000);
+        }
+
+        function updateTimerDisplay() {
+            const mins = Math.floor(timerSeconds / 60);
+            const secs = timerSeconds % 60;
+            const formatted = `${toArabicDigits(mins).padStart(2, '٠')}:${toArabicDigits(secs).padStart(2, '٠')}`;
+            document.getElementById('timer-display').innerText = formatted;
+        }
+
+        function loadQuestion() {
+            answeredCurrent = false;
+            const game = gamesData[currentGameKey];
+            const q = game.questions[currentQuestionIndex];
+
+            document.getElementById('question-counter').innerText = `السؤال ${toArabicDigits(currentQuestionIndex + 1)} من ${toArabicDigits(game.totalQuestions)}`;
+            document.getElementById('question-text').innerHTML = q.text;
+
+            const optionsContainer = document.getElementById('options-container');
+            optionsContainer.innerHTML = '';
+
+            q.options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = 'bg-white hover:bg-yellow-50 text-blue-950 font-bold p-3.5 sm:p-4 rounded-2xl border-2 border-slate-200 hover:border-yellow-500 shadow-sm transition-all duration-200 text-center flex items-center justify-center text-sm sm:text-base';
+                btn.innerHTML = `<span class="ml-2 font-black text-yellow-600 bg-yellow-100 w-7 h-7 rounded-xl inline-flex items-center justify-center text-xs">${toArabicDigits(idx + 1)}</span> <span>${opt}</span>`;
+                btn.onclick = () => selectAnswer(idx);
+                optionsContainer.appendChild(btn);
+            });
+
+            document.getElementById('feedback-box').classList.add('hidden');
+            document.getElementById('next-btn').classList.add('hidden');
+        }
+
+        function selectAnswer(selectedIndex) {
+            if (answeredCurrent) return;
+            answeredCurrent = true;
+
+            const game = gamesData[currentGameKey];
+            const q = game.questions[currentQuestionIndex];
+            const isCorrect = (selectedIndex === q.correct);
+
+            const optionsContainer = document.getElementById('options-container');
+            const buttons = optionsContainer.getElementsByTagName('button');
+
+            for (let i = 0; i < buttons.length; i++) {
+                buttons[i].disabled = true;
+                if (i === q.correct) {
+                    buttons[i].className = 'bg-emerald-100 text-emerald-900 font-bold p-3.5 sm:p-4 rounded-2xl border-2 border-emerald-500 shadow-sm text-center flex items-center justify-center text-sm sm:text-base';
+                } else if (i === selectedIndex && !isCorrect) {
+                    buttons[i].className = 'bg-rose-100 text-rose-900 font-bold p-3.5 sm:p-4 rounded-2xl border-2 border-rose-500 shadow-sm text-center flex items-center justify-center text-sm sm:text-base';
+                }
+            }
+
+            const feedbackBox = document.getElementById('feedback-box');
+            feedbackBox.classList.remove('hidden');
+
+            if (isCorrect) {
+                playSound('correct');
+                score++;
+                feedbackBox.className = 'p-3 rounded-xl text-sm font-bold text-center mb-3 bg-emerald-100 text-emerald-800 border-2 border-emerald-400';
+                feedbackBox.innerHTML = `<i class="fa-solid fa-circle-check ml-1.5"></i> إجابة صحيحة ورائعة! ${q.explanation}`;
+
+                if (game.type === 'vault') {
+                    const digitBox = document.getElementById(`digit-box-${currentQuestionIndex}`);
+                    digitBox.innerText = q.vaultDigit;
+                    digitBox.className = 'h-14 sm:h-16 bg-emerald-100 border-2 border-emerald-500 rounded-2xl flex items-center justify-center text-xl sm:text-2xl font-black text-emerald-700 shadow-md transform scale-105 transition-all';
+                } else if (game.type === 'mult') {
+                    const pct = Math.round(((currentQuestionIndex + 1) / game.totalQuestions) * 100);
+                    document.getElementById('mult-score-text').innerText = `${toArabicDigits(score)} / ${toArabicDigits(game.totalQuestions)}`;
+                    document.getElementById('mult-progress-bar').style.width = pct + '%';
+                    document.getElementById('mult-stage-text').innerText = `${toArabicDigits(currentQuestionIndex + 1)} / ${toArabicDigits(game.totalQuestions)}`;
+                } else if (game.type === 'power') {
+                    const pct = Math.round(((currentQuestionIndex + 1) / game.totalQuestions) * 100);
+                    document.getElementById('power-energy-text').innerText = toArabicDigits(pct) + '٪';
+                    document.getElementById('power-energy-bar').style.width = pct + '%';
+                    document.getElementById('power-stage-text').innerText = `${toArabicDigits(currentQuestionIndex + 1)} / ${toArabicDigits(game.totalQuestions)}`;
+                } else if (game.type === 'radar') {
+                    const pct = Math.round(((currentQuestionIndex + 1) / game.totalQuestions) * 100);
+                    document.getElementById('radar-progress-text').innerText = toArabicDigits(pct) + '٪';
+                    document.getElementById('radar-progress-bar').style.width = pct + '%';
+                    document.getElementById('radar-stage-text').innerText = `${toArabicDigits(currentQuestionIndex + 1)} / ${toArabicDigits(game.totalQuestions)}`;
+                } else if (game.type === 'rocket') {
+                    const pct = Math.round(((currentQuestionIndex + 1) / game.totalQuestions) * 100);
+                    document.getElementById('rocket-fuel-text').innerText = toArabicDigits(pct) + '٪';
+                    document.getElementById('rocket-fuel-bar').style.width = pct + '%';
+                    document.getElementById('rocket-stage-text').innerText = `${toArabicDigits(currentQuestionIndex + 1)} / ${toArabicDigits(game.totalQuestions)}`;
+                    document.getElementById('rocket-icon').style.transform = `translateY(-${(currentQuestionIndex + 1) * 7}px)`;
+                } else if (game.type === 'football') {
+                    document.getElementById('football-score-text').innerText = `${toArabicDigits(score)} / ${toArabicDigits(game.totalQuestions)}`;
+                    document.getElementById('football-shot-text').innerText = toArabicDigits(Math.min(currentQuestionIndex + 2, game.totalQuestions));
+                    document.getElementById('goal-status-msg').innerText = 'جوووول! هدف رائع في شباك الخصم!';
+                    document.getElementById('ball-indicator').style.right = `${120 + currentQuestionIndex * 20}px`;
+                } else if (game.type === 'pythagoras') {
+                    const pct = Math.round(((currentQuestionIndex + 1) / game.totalQuestions) * 100);
+                    document.getElementById('pythagoras-progress-text').innerText = toArabicDigits(pct) + '٪';
+                    document.getElementById('pythagoras-progress-bar').style.width = pct + '%';
+                    document.getElementById('pythagoras-stage-text').innerText = `${toArabicDigits(currentQuestionIndex + 1)} / ${toArabicDigits(game.totalQuestions)}`;
+                }
+
             } else {
-                document.querySelector('.teams-tab').classList.add('active');
-                document.getElementById('teamsSection').classList.add('active');
+                playSound('wrong');
+                feedbackBox.className = 'p-3 rounded-xl text-sm font-bold text-center mb-3 bg-rose-100 text-rose-800 border-2 border-rose-400';
+                feedbackBox.innerHTML = `<i class="fa-solid fa-circle-xmark ml-1.5"></i> إجابة غير دقيقة. ${q.explanation}`;
+
+                if (game.type === 'vault') {
+                    const digitBox = document.getElementById(`digit-box-${currentQuestionIndex}`);
+                    digitBox.innerText = '✗';
+                    digitBox.className = 'h-14 sm:h-16 bg-rose-100 border-2 border-rose-500 rounded-2xl flex items-center justify-center text-xl sm:text-2xl font-black text-rose-700 shadow-md';
+                } else if (game.type === 'mult') {
+                    document.getElementById('mult-score-text').innerText = `${toArabicDigits(score)} / ${toArabicDigits(game.totalQuestions)}`;
+                } else if (game.type === 'football') {
+                    document.getElementById('goal-status-msg').innerText = 'أهدرت الكرة! تصدى حارس المرمى للكرة.';
+                }
+            }
+
+            document.getElementById('next-btn').classList.remove('hidden');
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            const game = gamesData[currentGameKey];
+            if (currentQuestionIndex < game.questions.length) {
+                loadQuestion();
+            } else {
+                endGame(true);
             }
         }
 
-        function checkPeriodGrade() {
-            const idInput = document.getElementById('periodId').value.trim();
-            const resultBox = document.getElementById('resultContainer');
+        function endGame(completed) {
+            if (timerInterval) clearInterval(timerInterval);
+            document.getElementById('quiz-section').classList.add('hidden');
+            document.getElementById('game-over-screen').classList.remove('hidden');
 
-            if (idInput === "") {
-                resultBox.style.display = "block";
-                resultBox.className = "result-box error";
-                resultBox.innerHTML = "<h3>تنبيه</h3><p style='text-align:center;'>الرجاء إدخال رقم الهوية الوطنية.</p>";
-                return;
-            }
+            const game = gamesData[currentGameKey];
+            const elapsedSeconds = Math.floor((Date.now() - startTime) / 1000);
+            const mins = Math.floor(elapsedSeconds / 60);
+            const secs = elapsedSeconds % 60;
+            document.getElementById('final-time').innerText = `${toArabicDigits(mins).padStart(2, '٠')}:${toArabicDigits(secs).padStart(2, '٠')}`;
+            document.getElementById('final-score').innerText = `${toArabicDigits(score)} / ${toArabicDigits(game.totalQuestions)}`;
 
-            if (periodData[idInput]) {
-                const student = periodData[idInput];
-                const fb = getFeedback(student.score, student.total);
-                playSound(fb.sound);
+            if (score >= Math.ceil(game.totalQuestions * 0.75)) {
+                playSound('win');
+                document.getElementById('result-icon').className = 'fa-solid fa-trophy';
+                document.getElementById('result-title').innerText = 'تهانينا! حققت الإنجاز الأبطال';
+                document.getElementById('result-desc').innerText = `لقد نجحت باقتدار في إتمام اللعبة بنتيجة ممتازة (${toArabicDigits(score)} من ${toArabicDigits(game.totalQuestions)}).`;
 
-                resultBox.style.display = "block";
-                resultBox.className = "result-box success";
-                resultBox.innerHTML = `
-                    <h3>نتيجة اختبار الفترة</h3>
-                    <div class="info-row"><span>اسم الطالب:</span><strong>${student.name}</strong></div>
-                    <div class="grade-badge period">الدرجة: ${toArabicNumerals(student.score)} من ${toArabicNumerals(student.total)}</div>
-                    <div class="feedback-box ${fb.class}">
-                        <strong>${fb.title}</strong><br>
-                        ${fb.message}
-                    </div>
-                `;
+                if (game.type === 'vault') {
+                    document.getElementById('vault-lock-icon').className = 'fa-solid fa-unlock-keyhole';
+                    document.getElementById('vault-status-text').innerText = 'تم فتح الخزنة بنجاح تام!';
+                }
             } else {
-                resultBox.style.display = "block";
-                resultBox.className = "result-box error";
-                resultBox.innerHTML = `<h3>عذراً</h3><p style='text-align:center;'>الرقم (${toArabicNumerals(idInput)}) غير مسجل في اختبار الفترة.</p>`;
+                playSound('wrong');
+                document.getElementById('result-icon').className = 'fa-solid fa-rotate-right';
+                document.getElementById('result-title').innerText = 'حاول مرة أخرى!';
+                document.getElementById('result-desc').innerText = `نتيجتك الحالية هي (${toArabicDigits(score)} من ${toArabicDigits(game.totalQuestions)}). يمكنك إعادة المحاولة لتحقيق العلامة الكاملة.`;
             }
         }
 
-        function checkTeamsGrade() {
-            const idInput = document.getElementById('teamsId').value.trim();
-            const resultBox = document.getElementById('resultContainer');
-
-            if (idInput === "") {
-                resultBox.style.display = "block";
-                resultBox.className = "result-box error";
-                resultBox.innerHTML = "<h3>تنبيه</h3><p style='text-align:center;'>الرجاء إدخال رقم الهوية الوطنية.</p>";
-                return;
-            }
-
-            if (teamsData[idInput]) {
-                const student = teamsData[idInput];
-                const fb = getFeedback(student.score, student.total);
-                playSound(fb.sound);
-
-                resultBox.style.display = "block";
-                resultBox.className = "result-box success teams-result";
-                resultBox.innerHTML = `
-                    <h3>نتيجة اختبارات Teams</h3>
-                    <div class="info-row"><span>اسم الطالب:</span><strong>${student.name}</strong></div>
-                    <div class="grade-badge teams">الدرجة: ${toArabicNumerals(student.score)} من ${toArabicNumerals(student.total)}</div>
-                    <div class="feedback-box ${fb.class}">
-                        <strong>${fb.title}</strong><br>
-                        ${fb.message}
-                    </div>
-                `;
+        function restartCurrentGame() {
+            if (currentGameKey === 'multiplication-table') {
+                startMultTableGame(currentMultTable);
             } else {
-                resultBox.style.display = "block";
-                resultBox.className = "result-box error";
-                resultBox.innerHTML = `<h3>عذراً</h3><p style='text-align:center;'>لم يتم رصد درجات اختبار Teams لهذا الرقم (${toArabicNumerals(idInput)}) بعد.</p>`;
+                startGame(currentGameKey);
             }
+        }
+
+        function backToHome() {
+            if (timerInterval) clearInterval(timerInterval);
+            document.getElementById('game-container').classList.add('hidden');
+            document.getElementById('mult-selector-screen').classList.add('hidden');
+            document.getElementById('home-screen').classList.remove('hidden');
         }
     </script>
 </body>
