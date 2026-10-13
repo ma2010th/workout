@@ -1241,7 +1241,7 @@
             document.getElementById('final-score-points').textContent = toArabicDigits(currentScore * 10);
             document.getElementById('final-score-percentage').textContent = toArabicDigits(percentage) + '٪';
 
-            document.getElementById('print-name').textContent = currentUser ? currentUser.name : "المعلم المسؤول";
+            document.getElementById('print-name').textContent = currentUser ? currentUser.name : "المعلم ";
             document.getElementById('print-date').textContent = toArabicDigits(new Date().toLocaleDateString('ar-SA'));
 
             if(currentUser && currentUser.id !== "ADMIN") {
@@ -1285,7 +1285,7 @@
                 closeAdminPasscodeModal();
 
                 if(!currentUser) {
-                    currentUser = { name: "المعلم المسؤول", id: "ADMIN" };
+                    currentUser = { name: "المعلم ", id: "ADMIN" };
                 }
 
                 document.getElementById('display-username').textContent = currentUser.name;
@@ -1297,7 +1297,7 @@
                 renderLessons();
                 renderLeaderboard();
 
-                showMsg("تم تسجيل دخول المسؤول بنجاح", "أهلاً بك أستاذنا الفاضل. تم تفعيل خيارات الإدارة وتعديل الأسئلة وشروح التغذية الراجعة.", "success");
+                showMsg("تم تسجيل الدخول بنجاح", "أهلاً بك أستاذنا الفاضل. تم تفعيل خيارات الإدارة وتعديل الأسئلة وشروح التغذية الراجعة.", "success");
             } else {
                 showMsg("خطأ في الرقم السري", "الرقم السري الذي أدخلته غير صحيح.", "error");
             }
